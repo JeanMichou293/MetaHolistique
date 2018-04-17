@@ -3,10 +3,10 @@ import java.util.HashMap;
 
 public class Operation
 {
-	String id;
-	ArrayList<Operation> edgesIn = new ArrayList<Operation>();
-	ArrayList<Operation> edgesOut = new ArrayList<Operation>();
-	HashMap<Integer, Integer> machines = new HashMap<Integer, Integer>();
+	private String id;
+	private ArrayList<Operation> edgesIn = new ArrayList<Operation>();
+	private ArrayList<Operation> edgesOut = new ArrayList<Operation>();
+	private HashMap<Integer, Integer> machines = new HashMap<Integer, Integer>();
 
 	public Operation(String id)
 	{

@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Job
 {
-	String id;
-	ArrayList<Operation> operations = new ArrayList<Operation>();
+	private String id;
+	private ArrayList<Operation> operations = new ArrayList<Operation>();
 
 	public Job(String id)
 	{

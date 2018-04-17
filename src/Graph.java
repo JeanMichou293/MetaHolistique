@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Graph
 {
-	int numMachines;
-	ArrayList<Operation> nodes = new ArrayList<Operation>();
-	Operation start = new Operation("start");
-	Operation end = new Operation("end");
+	private int numMachines;
+	private ArrayList<Operation> nodes = new ArrayList<Operation>();
+	private Operation start = new Operation("start");
+	private Operation end = new Operation("end");
 
 	public Graph(int numMachines)
 	{
