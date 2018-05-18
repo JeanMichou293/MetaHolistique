@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+// #ONSEARETEICI : faire des arraylist à la place des tabs (separator = " " au lieu de "   ")
+
 public class Parser
 {
 	public static final String SEPARATOR = "   ";
@@ -53,7 +55,6 @@ public class Parser
 
 	public static Project parse(String content)
 	{
-
 		Project project = new Project();
 
 		try {
@@ -64,9 +65,14 @@ public class Parser
 			// LIGNE D'INTRODUCTION AVEC RECUPERATION DES PARAMETRES
 			String[] params = lines[0].split(SEPARATOR);
 			int nb_jobs = Integer.parseInt(params[0]);
+			int nb_machine = Integer.parseInt(params[1]);
 
 			for (int i = 0; i < nb_jobs; i++) {
 				project.addJob(new Job(i));
+			}
+
+			for (int i = 0; i < nb_machine; i++) {
+				project.addMachine(new Machine(i+1));
 			}
 
 			// ON VA MAINTENANT TRAITER CHAQUE LIGNE
@@ -88,7 +94,7 @@ public class Parser
 					
 					for (int k = 0 ; k < nb_machines ; k++){
 						
-						operation.addMachine(Integer.parseInt(line[index++]), Integer.parseInt(line[index++]));
+						operation.addMachine(project.getMachine(Integer.parseInt(line[index++])), Integer.parseInt(line[index++]));
 					}
 
 				}
@@ -107,10 +113,8 @@ public class Parser
 
 	public static void main(String[] args)
 	{
-
 		@SuppressWarnings("unused")
 		Project p = parse(readFile("C:\\Users\\Adrian\\Documents\\GitHub\\MetaHolistique\\TextData\\test.txt"));
-
 	}
 
 }
