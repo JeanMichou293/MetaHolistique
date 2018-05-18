@@ -25,6 +25,16 @@ public class Job
 		return this.operations;
 	}
 	
+	public static ArrayList<Job> createJobs(int count)
+	{
+		ArrayList<Job> jobs = new ArrayList<Job>();
+		for (int i = 0; i < count; i++) {
+			jobs.add(new Job(i));
+		}
+		
+		return jobs;
+	}
+	
 	public void print()
 	{
 		boolean first = true;

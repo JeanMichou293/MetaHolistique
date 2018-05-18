@@ -1,6 +1,6 @@
 public class Solver
 {
-	public static void solve()
+	public static void solve(Project project)
 	{
 		
 	}

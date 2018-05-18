@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Operation
 {
 	private int id;
-	private HashMap<Integer, Integer> machines = new HashMap<Integer, Integer>();
+	// List of affinity for each machine
+	private HashMap<Machine, Integer> affinities = new HashMap<Machine, Integer>();
 	
 	public enum State {PENDING, RUNNING, TERMINATED}; 
 	private State state = State.PENDING;
@@ -13,9 +15,9 @@ public class Operation
 		this.id = id;
 	}
 
-	public void addMachine(int machine, int time)
+	public void addMachine(Machine machine, int time)
 	{
-		this.machines.put(machine, time);
+		this.affinities.put(machine, time);
 	}
 
 	public int getId()
@@ -23,8 +25,18 @@ public class Operation
 		return this.id;
 	}
 
-	public HashMap<Integer, Integer> getMachines()
+	public HashMap<Machine, Integer> getAffinities()
 	{
-		return this.machines;
+		return this.affinities;
+	}
+	
+	public static ArrayList<Operation> createOperations(int count)
+	{
+		ArrayList<Operation> operations= new ArrayList<Operation>();
+		for (int i = 0; i < count; i++) {
+			operations.add(new Operation(i));
+		}
+		
+		return operations;
 	}
 }
