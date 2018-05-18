@@ -9,6 +9,10 @@ public class Project
 		this.jobs.add(job);
 	}
 	
+	public Job getJob(int index){
+		return jobs.get(index);
+	}
+	
 	public void print()
 	{
 		for (Job job : jobs)
