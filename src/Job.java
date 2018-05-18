@@ -15,7 +15,7 @@ public class Job
 		this.operations.add(operation);
 	}
 
-	public int getID()
+	public int getId()
 	{
 		return this.id;
 	}
@@ -23,5 +23,18 @@ public class Job
 	public ArrayList<Operation> getOperations()
 	{
 		return this.operations;
+	}
+	
+	public void print()
+	{
+		boolean first = true;
+		for (Operation operation : operations) {
+			if (!first)
+				System.out.print(" -> ");
+			else
+				first = false;
+			System.out.print("J" + this.id + "o" + operation.getId());
+		}
+		System.out.println();
 	}
 }

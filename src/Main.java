@@ -2,10 +2,14 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		Graph g1 = new Graph();
-		Job j1 = new Job(0);
-		Operation o1 = new Operation(0);
+		Project p1 = new Project();
+		Job j1 = new Job(0), j2 = new Job(1);
+		Operation o1 = new Operation(0), o2 = new Operation(1), o3 = new Operation(2);
 		j1.addOperation(o1);
-		g1.addJob(j1);
+		j1.addOperation(o2);
+		j2.addOperation(o3);
+		p1.addJob(j2);
+		p1.addJob(j1);
+		p1.print();
 	}
 }
