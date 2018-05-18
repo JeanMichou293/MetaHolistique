@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Job
 {
-	private String id;
+	private int id;
 	private ArrayList<Operation> operations = new ArrayList<Operation>();
 
-	public Job(String id)
+	public Job(int id)
 	{
 		this.id = id;
 	}
@@ -15,7 +15,7 @@ public class Job
 		this.operations.add(operation);
 	}
 
-	public String getID()
+	public int getID()
 	{
 		return this.id;
 	}

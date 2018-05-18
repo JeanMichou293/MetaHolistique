@@ -2,17 +2,8 @@ import java.util.ArrayList;
 
 public class Graph
 {
-	private int numMachines;
-	private ArrayList<Operation> nodes = new ArrayList<Operation>();
-	private Operation start = new Operation("start");
-	private Operation end = new Operation("end");
-
-	public Graph(int numMachines)
-	{
-		this.numMachines = numMachines;
-		nodes.add(new Operation("Start"));
-		nodes.add(new Operation("End"));
-	}
+	private Operation start = new Operation(0);
+	private Operation end = new Operation(1);
 
 	public void addJob(Job j)
 	{

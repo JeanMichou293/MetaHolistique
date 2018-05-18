@@ -3,12 +3,12 @@ import java.util.HashMap;
 
 public class Operation
 {
-	private String id;
+	private int id;
 	private ArrayList<Operation> edgesIn = new ArrayList<Operation>();
 	private ArrayList<Operation> edgesOut = new ArrayList<Operation>();
 	private HashMap<Integer, Integer> machines = new HashMap<Integer, Integer>();
 
-	public Operation(String id)
+	public Operation(int id)
 	{
 		this.id = id;
 	}
@@ -28,7 +28,7 @@ public class Operation
 		this.edgesOut.add(node);
 	}
 
-	public String getID()
+	public int getID()
 	{
 		return this.id;
 	}
