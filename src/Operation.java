@@ -29,14 +29,4 @@ public class Operation
 	{
 		return this.affinities;
 	}
-	
-	public static ArrayList<Operation> createOperations(int count)
-	{
-		ArrayList<Operation> operations= new ArrayList<Operation>();
-		for (int i = 0; i < count; i++) {
-			operations.add(new Operation(i));
-		}
-		
-		return operations;
-	}
 }

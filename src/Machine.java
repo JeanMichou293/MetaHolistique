@@ -9,14 +9,4 @@ public class Machine
 	{
 		this.id = id;
 	}
-	
-	public static ArrayList<Machine> createMachines(int count)
-	{
-		ArrayList<Machine> machines = new ArrayList<Machine>();
-		for (int i = 0; i < count; i++) {
-			machines.add(new Machine(i));
-		}
-		
-		return machines;
-	}
 }
