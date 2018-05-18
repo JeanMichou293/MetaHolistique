@@ -5,48 +5,55 @@ import java.io.IOException;
 public class Parser
 {
 
-        public static void read(String FILENAME) {
+    public static String readFile(String FILENAME) {
 
-            BufferedReader br = null;
-            FileReader fr = null;
+        String res = "";
 
-            try {
+        BufferedReader br = null;
+        FileReader fr = null;
 
-                fr = new FileReader(FILENAME);
-                br = new BufferedReader(fr);
+        try {
 
-            } catch (IOException e) {
-
-                e.printStackTrace();
-
-            } finally {
-
-                try {
-
-                    if (br != null)
-                        br.close();
-
-                    if (fr != null)
-                        fr.close();
-
-                } catch (IOException ex) {
-
-                    ex.printStackTrace();
-
-                }
-
-            }
-
-        }
-
-        public static void main(String[] args){
+            fr = new FileReader(FILENAME);
+            br = new BufferedReader(fr);
 
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
-                System.out.println(sCurrentLine);
+                res+=sCurrentLine;
+            }
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            try {
+
+                if (br != null)
+                    br.close();
+
+                if (fr != null)
+                    fr.close();
+
+            } catch (IOException ex) {
+
+                ex.printStackTrace();
+
             }
 
         }
+        
+        return res;
+
+    }
+
+    public static void main(String[] args){
+    	
+    	System.out.println(readFile(null));
+
+
+    }
 
 }
