@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Operation
@@ -23,6 +22,11 @@ public class Operation
 	public int getId()
 	{
 		return this.id;
+	}
+
+	public State getState()
+	{
+		return this.state;
 	}
 
 	public HashMap<Machine, Integer> getAffinities()

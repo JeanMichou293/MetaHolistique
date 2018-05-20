@@ -9,4 +9,13 @@ public class Machine
 	{
 		this.id = id;
 	}
+
+	public int getID()
+	{
+		return id;
+	}
+	public ArrayList<Operation> getBatch()
+	{
+		return batch;
+	}
 }

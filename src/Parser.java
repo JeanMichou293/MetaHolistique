@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Parser
 {
-	public static final String SEPARATOR = "   ";
+	public static final String SEPARATOR = " +";
 
 	public static String readFile(String FILENAME)
 	{
@@ -89,12 +89,12 @@ public class Parser
 					Operation operation = new Operation(j);
 					
 					job.addOperation(operation);
-					
 					int nb_machines = Integer.parseInt(line[index++]);
 					
 					for (int k = 0 ; k < nb_machines ; k++){
 						
-						operation.addMachine(project.getMachine(Integer.parseInt(line[index++])), Integer.parseInt(line[index++]));
+						operation.addMachine(project.getMachine(Integer.parseInt(line[index++])-1), Integer.parseInt(line[index++]));
+						System.out.println("Ajout de la machine "+line[index-2]+" avec temps de "+line[index-1]);
 					}
 
 				}
@@ -114,7 +114,8 @@ public class Parser
 	public static void main(String[] args)
 	{
 		@SuppressWarnings("unused")
-		Project p = parse(readFile("C:\\Users\\Adrian\\Documents\\GitHub\\MetaHolistique\\TextData\\test.txt"));
+		Project p = parse(readFile("C:\\Users\\Adrian\\Documents\\GitHub\\MetaHolistique\\textJobData\\Barnes\\mt10c1.fjs"));
+		System.exit(0);
 	}
 
 }
