@@ -15,7 +15,8 @@ public class Main
 		*/
 		
 		Project p2 = Parser.parse(Parser.readFile("C:\\Users\\Adrian\\Documents\\GitHub\\MetaHolistique\\textJobData\\Barnes\\mt10c1.fjs"));
-		p2.print();
+		
+		System.out.println(p2);
 		
 	}
 }

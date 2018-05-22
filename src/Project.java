@@ -23,9 +23,11 @@ public class Project
 		return machines.get(index);
 	}
 	
-	public void print()
+	public String toString()
 	{
+		String str = "";
 		for (Job job : jobs)
-			job.print();
+			str+=job+"\n";
+		return str.substring(0,str.length()-1);
 	}
 }

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Map.Entry;
 
 public class Job
 {
@@ -26,22 +25,16 @@ public class Job
 		return this.operations;
 	}
 	
-	public void print()
+	public String toString()
 	{
-		System.out.print("J" + this.id + "o0");
+		String str = "";
+		
+		str+="J" + this.id + "o0";
+		
 		for (Operation operation : operations) {
-			System.out.print(" --");
-			boolean first = true;
-			for(Entry<Machine, Integer> entry : operation.getAffinities().entrySet()) {
-				if (first){
-					System.out.print(entry.getKey().getID()+"("+entry.getValue()+")");
-					first = false;
-				}
-				else
-					System.out.print("|"+entry.getKey().getID()+"("+entry.getValue()+")");
-			}
-			System.out.print("-> J" + this.id + "o" + (operation.getId()+1));
+			str+=" --"+operation+"-> J" + this.id + "o" + (operation.getId()+1);
 		}
-		System.out.println();
+		
+		return str;
 	}
 }

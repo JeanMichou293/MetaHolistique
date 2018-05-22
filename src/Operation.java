@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class Operation
 {
@@ -34,5 +35,19 @@ public class Operation
 	public HashMap<Machine, Integer> getAffinities()
 	{
 		return this.affinities;
+	}
+	
+	public String toString(){
+		String str = "";
+		boolean first = true;
+		for(Entry<Machine, Integer> entry : affinities.entrySet()) {
+			if (first){
+				str+=entry.getKey().getID()+"("+entry.getValue()+")";
+				first = false;
+			}
+			else
+				str+="|"+entry.getKey().getID()+"("+entry.getValue()+")";
+		}
+		return str;
 	}
 }
