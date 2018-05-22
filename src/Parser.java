@@ -94,7 +94,7 @@ public class Parser
 					for (int k = 0 ; k < nb_machines ; k++){
 						
 						operation.addMachine(project.getMachine(Integer.parseInt(line[index++])-1), Integer.parseInt(line[index++]));
-						System.out.println("Ajout de la machine "+line[index-2]+" avec temps de "+line[index-1]);
+						//System.out.println("Ajout de la machine "+line[index-2]+" avec temps de "+line[index-1]);
 					}
 
 				}
@@ -109,13 +109,6 @@ public class Parser
 		}
 
 		return project;
-	}
-
-	public static void main(String[] args)
-	{
-		@SuppressWarnings("unused")
-		Project p = parse(readFile("C:\\Users\\Adrian\\Documents\\GitHub\\MetaHolistique\\textJobData\\Barnes\\mt10c1.fjs"));
-		System.exit(0);
 	}
 
 }

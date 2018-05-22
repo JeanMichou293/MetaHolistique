@@ -9,6 +9,8 @@ public class Operation
 	public enum State {PENDING, RUNNING, TERMINATED}; 
 	private State state = State.PENDING;
 
+	
+	
 	public Operation(int id)
 	{
 		this.id = id;
