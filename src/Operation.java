@@ -73,14 +73,14 @@ public class Operation
 	
 	public void process(int time)
 	{
-		System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ... ");
+		System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ");
 
 		// Assign operation to the idle machine with the highest affinity (shortest duration)
 		Machine machine = this.getMachineByAffinity(time);
 		int duration = this.getMachineAffinity(machine);
 		Interval interval = new Interval(time, time + duration);
 		machine.assignOperation(this, interval);
-		System.out.println("Assigned " + machine + " (duration=" + duration + ")");
+		System.out.println("-> " + machine + " (d=" + duration + ")");
 
 		// Remove operation from queue
 		this.getJob().removeFromQueue();

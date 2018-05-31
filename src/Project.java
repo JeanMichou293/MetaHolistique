@@ -32,9 +32,9 @@ public class Project
 			Interval interval = job.getLastProcessedInterval();
 			Operation operation = job.getFromQueue();
 			
-			// Operations remain unprocessed
+			// Operation can be assigned
 			if (operation != null && operation.canHaveIdleMachine(time)) {
-				// No operations have been processed yet
+				// No operation is executing at the moment 
 				if (interval == null || interval.end <= time) {
 					// Process operation
 					operation.process(time);
