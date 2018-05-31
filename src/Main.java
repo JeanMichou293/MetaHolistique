@@ -10,10 +10,10 @@ public class Main
 			System.out.println(path);
 		}
 
-		Project project = Parser.parse(Parser.readFile("textJobData/Barnes/mt10c1.fjs"));
+		Project project = Parser.parse(Parser.readFile("textJobData/test.txt"));
 		System.out.println(project);
 		
 		System.out.println("Solving project...");
-		Solver.solve(project);
+		Solver.solveByHeuristic(project);
 	}
 }

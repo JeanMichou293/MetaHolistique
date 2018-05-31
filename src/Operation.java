@@ -70,10 +70,28 @@ public class Operation
 		}
 		return false;
 	}
+	
+	public void process(int time)
+	{
+		System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ... ");
+
+		// Assign operation to the idle machine with the highest affinity (shortest duration)
+		Machine machine = this.getMachineByAffinity(time);
+		int duration = this.getMachineAffinity(machine);
+		Interval interval = new Interval(time, time + duration);
+		machine.assignOperation(this, interval);
+		System.out.println("Assigned " + machine + " (duration=" + duration + ")");
+
+		// Remove operation from queue
+		this.getJob().removeFromQueue();
+		
+		// Add operation to processed
+		job.setProcessed(this, interval);
+	}
 
 	public String toString()
 	{
-		String str = "";
+		String str = "id=" + Integer.valueOf(this.id) + "  ";
 		boolean first = true;
 		for (Entry<Machine, Integer> entry : affinities.entrySet()) {
 			if (first) {

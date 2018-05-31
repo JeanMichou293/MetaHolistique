@@ -43,7 +43,7 @@ public class Job
 		return this.operationsInTime.get(operation);
 	}
 	
-	public void process(Operation operation, Interval interval)
+	public void setProcessed(Operation operation, Interval interval)
 	{
 		this.processed.add(operation);
 		this.operationsInTime.put(operation, interval);

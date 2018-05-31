@@ -25,35 +25,22 @@ public class Project
 		return machines.get(index);
 	}
 
-	public Operation getNextOperation()
+	public void process(int time)
 	{
-		Operation nextOperation = null;
-		int soonerEnd = Integer.MAX_VALUE;
 		for (Job job : this.jobs) {
+			// Get operation at this time
 			Interval interval = job.getLastProcessedInterval();
-			Operation operation = job.getFromQueue(); // TODO: check not null
-			if (interval == null) {
-				if (operation.canHaveIdleMachine(0)) {
-					return operation;
+			Operation operation = job.getFromQueue();
+			
+			// Operations remain unprocessed
+			if (operation != null && operation.canHaveIdleMachine(time)) {
+				// No operations have been processed yet
+				if (interval == null || interval.end <= time) {
+					// Process operation
+					operation.process(time);
 				}
 			}
-			else {
-				// TODOOOOO
-			}
-				
-			
-			if (!operation.canHaveIdleMachine(0))
-			
-			// No operation has been processed within this job
-			if (interval == null)
-				return job.getFromQueue();
-			
-			if (interval.end < soonerEnd) {
-				nextOperation = job.getFromQueue();
-				soonerEnd = interval.end;
-			}
 		}
-		return nextOperation;
 	}
 
 	public String toString()
@@ -62,5 +49,14 @@ public class Project
 		for (Job job : jobs)
 			str += job + "\n";
 		return str.substring(0, str.length() - 1);
+	}
+	
+	public boolean isQueueEmpty()
+	{
+		for (Job job : jobs) {
+			if (job.getFromQueue() != null)
+				return false;
+		}
+		return true;
 	}
 }

@@ -11,7 +11,7 @@ public class Interval
 
 	public boolean isIn(int time)
 	{
-		return this.begin <= time && this.end >= time;
+		return this.begin <= time && this.end > time; // Upper bound excluded to allow operations to start
 	}
 
 	// TODO: more efficient: hashmap between time and time interval???
