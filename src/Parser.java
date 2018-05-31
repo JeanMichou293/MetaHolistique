@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-// #ONSEARETEICI : faire des arraylist à la place des tabs (separator = " " au lieu de "   ")
+// #ONSEARETEICI : faire des arraylist Ã  la place des tabs (separator = " " au lieu de "   ")
 
 public class Parser
 {
@@ -72,12 +72,11 @@ public class Parser
 			}
 
 			for (int i = 0; i < nb_machine; i++) {
-				project.addMachine(new Machine(i+1));
+				project.addMachine(new Machine(i + 1));
 			}
 
 			// ON VA MAINTENANT TRAITER CHAQUE LIGNE
 			for (int i = 1; i < lines.length; i++) {
-
 				int index = 0;
 				Job job = project.getJob(i - 1);
 
@@ -85,22 +84,19 @@ public class Parser
 				int nb_operations = Integer.parseInt(line[index++]);
 
 				for (int j = 0; j < nb_operations; j++) {
+					Operation operation = new Operation(j, job);
 
-					Operation operation = new Operation(j);
-					
 					job.addOperation(operation);
 					int nb_machines = Integer.parseInt(line[index++]);
-					
-					for (int k = 0 ; k < nb_machines ; k++){
-						
-						operation.addMachine(project.getMachine(Integer.parseInt(line[index++])-1), Integer.parseInt(line[index++]));
-						//System.out.println("Ajout de la machine "+line[index-2]+" avec temps de "+line[index-1]);
+
+					for (int k = 0; k < nb_machines; k++) {
+						operation.addMachine(project.getMachine(Integer.parseInt(line[index++]) - 1),
+							Integer.parseInt(line[index++]));
+						// System.out.println("Ajout de la machine "+line[index-2]+" avec temps de
+						// "+line[index-1]);
 					}
-
 				}
-
 			}
-
 		}
 
 		catch (Exception e) {

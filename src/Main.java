@@ -1,22 +1,19 @@
+import java.io.File;
+
 public class Main
 {
 	public static void main(String[] args)
 	{
-		/*
-		Project p1 = new Project();
-		Job j1 = new Job(0), j2 = new Job(1);
-		Operation o1 = new Operation(0), o2 = new Operation(1), o3 = new Operation(2);
-		j1.addOperation(o1);
-		j1.addOperation(o2);
-		j2.addOperation(o3);
-		p1.addJob(j2);
-		p1.addJob(j1);
-		p1.print();
-		*/
+		File f = new File(".");
+		File[] paths = f.listFiles();
+		for (File path : paths) {
+			System.out.println(path);
+		}
+
+		Project project = Parser.parse(Parser.readFile("textJobData/Barnes/mt10c1.fjs"));
+		System.out.println(project);
 		
-		Project p2 = Parser.parse(Parser.readFile("C:\\Users\\Adrian\\Documents\\GitHub\\MetaHolistique\\textJobData\\Barnes\\mt10c1.fjs"));
-		
-		System.out.println(p2);
-		
+		System.out.println("Solving project...");
+		Solver.solve(project);
 	}
 }

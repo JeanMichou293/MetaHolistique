@@ -1,9 +1,9 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Machine
 {
 	private int id;
-	private ArrayList<Operation> batch = new ArrayList<Operation>();
+	private HashMap<Operation, Interval> operationsInTime = new HashMap<Operation, Interval>();
 
 	public Machine(int id)
 	{
@@ -14,8 +14,24 @@ public class Machine
 	{
 		return id;
 	}
-	public ArrayList<Operation> getBatch()
+
+	public boolean isBusy(int time)
 	{
-		return batch;
+		// TODO: make it more efficient
+		for (Operation operation : this.operationsInTime.keySet()) {
+			if (this.operationsInTime.get(operation).isIn(time))
+				return true;
+		}
+		return false;
+	}
+
+	public void assignOperation(Operation operation, Interval interval)
+	{
+		operationsInTime.put(operation, interval);
+	}
+	
+	public String toString()
+	{
+		return "M" + Integer.toString(this.id);
 	}
 }
