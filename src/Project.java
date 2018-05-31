@@ -33,7 +33,7 @@ public class Project
 			Operation operation = job.getFromQueue();
 
 			// Operation can be assigned
-			if (operation != null && operation.canHaveIdleMachine(time)) {
+			if (operation != null && operation.isMachineAvailable(time)) {
 				// No operation is being executed at the moment
 				if (interval == null || interval.end <= time) {
 					// Process operation
@@ -51,9 +51,10 @@ public class Project
 			if (duration > maxDuration)
 				maxDuration = duration;
 		}
-		
+
 		return maxDuration;
 	}
+
 	public boolean isQueueEmpty()
 	{
 		for (Job job : jobs) {
@@ -62,7 +63,7 @@ public class Project
 		}
 		return true;
 	}
-	
+
 	public String toString()
 	{
 		String str = "";

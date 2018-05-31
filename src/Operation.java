@@ -62,7 +62,7 @@ public class Operation
 		return bestMachine;
 	}
 
-	public boolean canHaveIdleMachine(int time)
+	public boolean isMachineAvailable(int time)
 	{
 		for (Entry<Machine, Integer> entry : this.affinities.entrySet()) {
 			if (!entry.getKey().isBusy(time))
@@ -73,14 +73,14 @@ public class Operation
 
 	public void process(int time)
 	{
-		System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ");
+		//System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ");
 
 		// Assign operation
 		Machine machine = this.getMachineByAffinity(time);
 		int duration = this.getMachineAffinity(machine);
 		Interval interval = new Interval(time, time + duration);
 		machine.assignOperation(this, interval);
-		System.out.println("-> " + machine + " (d=" + duration + ")");
+		//System.out.println("-> " + machine + " (d=" + duration + ")");
 
 		// Remove operation from queue
 		this.getJob().removeFromQueue();

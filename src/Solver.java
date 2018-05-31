@@ -5,7 +5,7 @@ public abstract class Solver
 	{
 		int time = 0;
 		while (!project.isQueueEmpty()) {
-			System.out.println("time=" + time);
+			//System.out.println("time=" + time);
 			// Process every operation at the specified time
 			project.process(time);
 
@@ -13,7 +13,7 @@ public abstract class Solver
 			// moment"???
 			time++;
 		}
-		
+
 		return project.getDuration();
 	}
 }

@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -8,33 +9,23 @@ public class Parser
 {
 	public static final String SEPARATOR = " +";
 
-	public static String readFile(String FILENAME)
+	public static String readFile(File file)
 	{
-
 		String res = "";
-
 		BufferedReader br = null;
 		FileReader fr = null;
 
 		try {
-
-			fr = new FileReader(FILENAME);
+			fr = new FileReader(file);
 			br = new BufferedReader(fr);
-
 			String sCurrentLine;
 
-			while ((sCurrentLine = br.readLine()) != null) {
+			while ((sCurrentLine = br.readLine()) != null)
 				res += sCurrentLine + '\n';
-			}
-
 		} catch (IOException e) {
-
 			e.printStackTrace();
-
 		} finally {
-
 			try {
-
 				if (br != null)
 					br.close();
 
@@ -42,15 +33,11 @@ public class Parser
 					fr.close();
 
 			} catch (IOException ex) {
-
 				ex.printStackTrace();
-
 			}
-
 		}
 
 		return res;
-
 	}
 
 	public static Project parse(String content)
@@ -58,7 +45,6 @@ public class Parser
 		Project project = new Project();
 
 		try {
-
 			// RECUPERATION DES LIGNES
 			String[] lines = content.split("\n");
 
@@ -106,5 +92,4 @@ public class Parser
 
 		return project;
 	}
-
 }

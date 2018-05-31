@@ -48,7 +48,7 @@ public class Job
 		this.processed.add(operation);
 		this.operationsInTime.put(operation, interval);
 	}
-	
+
 	public int getDuration()
 	{
 		Operation lastOperation = this.operations.get(this.operations.size() - 1);

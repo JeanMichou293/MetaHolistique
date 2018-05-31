@@ -1,12 +1,25 @@
+import java.io.File;
+
 public class Main
 {
 	public static void main(String[] args)
 	{
-		Project project = Parser.parse(Parser.readFile("textJobData/test.txt"));
-		System.out.println(project);
+		testDirectory("./textJobData/Barnes");
+	}
 
-		System.out.println("Solving project...");
+	public static void testDirectory(String path)
+	{
+		File folder = new File(path);
+		File[] files = folder.listFiles();
+		for (File file : files)
+			testFile(file);
+	}
+
+	public static void testFile(File file)
+	{
+		Project project = Parser.parse(Parser.readFile(file));
+		System.out.print(file.getName() + ": ");
 		int result = Solver.solveByHeuristic(project);
-		System.out.println("Result = " + result);
+		System.out.println(result);
 	}
 }
