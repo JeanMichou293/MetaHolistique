@@ -76,10 +76,11 @@ public class Parser
 					int nb_machines = Integer.parseInt(line[index++]);
 
 					for (int k = 0; k < nb_machines; k++) {
-						operation.addMachine(project.getMachine(Integer.parseInt(line[index++]) - 1),
+						operation.addMachine(
+							project.getMachine(
+								Integer.parseInt(line[index++]) - 1),
 							Integer.parseInt(line[index++]));
-						// System.out.println("Ajout de la machine "+line[index-2]+" avec temps de
-						// "+line[index-1]);
+						// System.out.println("Ajout de la machine "+line[index-2]+" avec temps de"+line[index-1]);
 					}
 				}
 			}

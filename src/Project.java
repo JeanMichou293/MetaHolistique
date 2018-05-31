@@ -27,6 +27,8 @@ public class Project
 
 	public void process(int time)
 	{
+		ArrayList<Operation> potentialPool = new ArrayList<Operation>();
+
 		for (Job job : this.jobs) {
 			// Get operation at this time
 			Interval interval = job.getLastProcessedInterval();
@@ -36,11 +38,32 @@ public class Project
 			if (operation != null && operation.isMachineAvailable(time)) {
 				// No operation is being executed at the moment
 				if (interval == null || interval.end <= time) {
+					// Basic heuristic
 					// Process operation
-					operation.process(time);
+					// operation.process(time);
+
+					// Add operation to list
+					potentialPool.add(operation);
 				}
 			}
 		}
+
+		// Select shortest operation (SJF)
+		int minDuration = Integer.MAX_VALUE;
+		Operation chosenOperation = null;
+		for (Operation operation : potentialPool) {
+			// Get machine with best affinity
+			Machine machine = operation.getMachineByAffinity(time);
+			int duration = operation.getMachineAffinity(machine);
+			if (duration < minDuration) {
+				minDuration = duration;
+				chosenOperation = operation;
+			}
+		}
+
+		// Process operation
+		if (chosenOperation != null)
+			chosenOperation.process(time);
 	}
 
 	public int getDuration()

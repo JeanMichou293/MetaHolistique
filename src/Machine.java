@@ -3,7 +3,8 @@ import java.util.HashMap;
 public class Machine
 {
 	private int id;
-	private HashMap<Operation, Interval> operationsInTime = new HashMap<Operation, Interval>();
+	private HashMap<Operation, Interval> operationsInTime =
+		new HashMap<Operation, Interval>();
 
 	public Machine(int id)
 	{

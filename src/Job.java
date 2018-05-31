@@ -8,7 +8,8 @@ public class Job
 	private ArrayList<Operation> operations = new ArrayList<Operation>();
 	private LinkedList<Operation> queue = new LinkedList<Operation>();
 	private LinkedList<Operation> processed = new LinkedList<Operation>();
-	private HashMap<Operation, Interval> operationsInTime = new HashMap<Operation, Interval>();
+	private HashMap<Operation, Interval> operationsInTime =
+		new HashMap<Operation, Interval>();
 
 	public Job(int id)
 	{
@@ -51,7 +52,8 @@ public class Job
 
 	public int getDuration()
 	{
-		Operation lastOperation = this.operations.get(this.operations.size() - 1);
+		Operation lastOperation =
+			this.operations.get(this.operations.size() - 1);
 		return this.operationsInTime.get(lastOperation).end;
 	}
 
@@ -60,7 +62,8 @@ public class Job
 		String str = "J" + this.id + "o0";
 
 		for (Operation operation : operations) {
-			str += " --" + operation + "-> J" + this.id + "o" + (operation.getId() + 1);
+			str += " --" + operation + "-> J" + this.id + "o"
+				+ (operation.getId() + 1);
 		}
 
 		return str;

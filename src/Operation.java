@@ -7,11 +7,11 @@ public class Operation
 	private Job job;
 
 	// List of affinity for each machine
-	private HashMap<Machine, Integer> affinities = new HashMap<Machine, Integer>();
+	private HashMap<Machine, Integer> affinities =
+		new HashMap<Machine, Integer>();
 
 	/*
-	 * public enum State {PENDING, RUNNING, TERMINATED}; private State state =
-	 * State.PENDING;
+	 * public enum State {PENDING, RUNNING, TERMINATED}; private State state = State.PENDING;
 	 */
 
 	public Operation(int id, Job job)
@@ -73,14 +73,14 @@ public class Operation
 
 	public void process(int time)
 	{
-		//System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ");
+		// System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ");
 
 		// Assign operation
 		Machine machine = this.getMachineByAffinity(time);
 		int duration = this.getMachineAffinity(machine);
 		Interval interval = new Interval(time, time + duration);
 		machine.assignOperation(this, interval);
-		//System.out.println("-> " + machine + " (d=" + duration + ")");
+		// System.out.println("-> " + machine + " (d=" + duration + ")");
 
 		// Remove operation from queue
 		this.getJob().removeFromQueue();
@@ -97,8 +97,10 @@ public class Operation
 			if (first) {
 				str += entry.getKey().getId() + "(" + entry.getValue() + ")";
 				first = false;
-			} else
-				str += "|" + entry.getKey().getId() + "(" + entry.getValue() + ")";
+			} else {
+				str +=
+					"|" + entry.getKey().getId() + "(" + entry.getValue() + ")";
+			}
 		}
 		return str;
 	}
