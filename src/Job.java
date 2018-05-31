@@ -31,7 +31,7 @@ public class Job
 	{
 		return this.queue.peekFirst();
 	}
-	
+
 	public void removeFromQueue()
 	{
 		this.queue.pop();
@@ -42,18 +42,22 @@ public class Job
 		Operation operation = this.processed.peekLast();
 		return this.operationsInTime.get(operation);
 	}
-	
+
 	public void setProcessed(Operation operation, Interval interval)
 	{
 		this.processed.add(operation);
 		this.operationsInTime.put(operation, interval);
 	}
+	
+	public int getDuration()
+	{
+		Operation lastOperation = this.operations.get(this.operations.size() - 1);
+		return this.operationsInTime.get(lastOperation).end;
+	}
 
 	public String toString()
 	{
-		String str = "";
-
-		str += "J" + this.id + "o0";
+		String str = "J" + this.id + "o0";
 
 		for (Operation operation : operations) {
 			str += " --" + operation + "-> J" + this.id + "o" + (operation.getId() + 1);

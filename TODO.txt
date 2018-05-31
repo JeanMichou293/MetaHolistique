@@ -1,6 +1,0 @@
-TODO
-Solver
-	Implement heuristic
-	Implement MA and OS (cf. Marie Jo's homepage), determine the overall project cost
-Timeline: models time constraint (one operation by machine at a time)
-	=> used for generating MA and OS

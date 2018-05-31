@@ -45,7 +45,7 @@ public class Operation
 		return this.affinities.get(machine);
 	}
 
-	// Return idle machine with the highest affinity
+	// Return idle machine with the highest affinity (shortest duration)
 	public Machine getMachineByAffinity(int time)
 	{
 		Machine bestMachine = null;
@@ -61,7 +61,7 @@ public class Operation
 		}
 		return bestMachine;
 	}
-	
+
 	public boolean canHaveIdleMachine(int time)
 	{
 		for (Entry<Machine, Integer> entry : this.affinities.entrySet()) {
@@ -70,12 +70,12 @@ public class Operation
 		}
 		return false;
 	}
-	
+
 	public void process(int time)
 	{
 		System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ");
 
-		// Assign operation to the idle machine with the highest affinity (shortest duration)
+		// Assign operation
 		Machine machine = this.getMachineByAffinity(time);
 		int duration = this.getMachineAffinity(machine);
 		Interval interval = new Interval(time, time + duration);
@@ -84,7 +84,7 @@ public class Operation
 
 		// Remove operation from queue
 		this.getJob().removeFromQueue();
-		
+
 		// Add operation to processed
 		job.setProcessed(this, interval);
 	}
@@ -95,10 +95,10 @@ public class Operation
 		boolean first = true;
 		for (Entry<Machine, Integer> entry : affinities.entrySet()) {
 			if (first) {
-				str += entry.getKey().getID() + "(" + entry.getValue() + ")";
+				str += entry.getKey().getId() + "(" + entry.getValue() + ")";
 				first = false;
 			} else
-				str += "|" + entry.getKey().getID() + "(" + entry.getValue() + ")";
+				str += "|" + entry.getKey().getId() + "(" + entry.getValue() + ")";
 		}
 		return str;
 	}

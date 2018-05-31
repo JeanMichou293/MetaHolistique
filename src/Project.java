@@ -31,10 +31,10 @@ public class Project
 			// Get operation at this time
 			Interval interval = job.getLastProcessedInterval();
 			Operation operation = job.getFromQueue();
-			
+
 			// Operation can be assigned
 			if (operation != null && operation.canHaveIdleMachine(time)) {
-				// No operation is executing at the moment 
+				// No operation is being executed at the moment
 				if (interval == null || interval.end <= time) {
 					// Process operation
 					operation.process(time);
@@ -43,14 +43,17 @@ public class Project
 		}
 	}
 
-	public String toString()
+	public int getDuration()
 	{
-		String str = "";
-		for (Job job : jobs)
-			str += job + "\n";
-		return str.substring(0, str.length() - 1);
+		int maxDuration = 0;
+		for (Job job : jobs) {
+			int duration = job.getDuration();
+			if (duration > maxDuration)
+				maxDuration = duration;
+		}
+		
+		return maxDuration;
 	}
-	
 	public boolean isQueueEmpty()
 	{
 		for (Job job : jobs) {
@@ -58,5 +61,13 @@ public class Project
 				return false;
 		}
 		return true;
+	}
+	
+	public String toString()
+	{
+		String str = "";
+		for (Job job : jobs)
+			str += job + "\n";
+		return str.substring(0, str.length() - 1);
 	}
 }

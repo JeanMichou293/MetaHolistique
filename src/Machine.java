@@ -10,7 +10,7 @@ public class Machine
 		this.id = id;
 	}
 
-	public int getID()
+	public int getId()
 	{
 		return id;
 	}
@@ -29,7 +29,7 @@ public class Machine
 	{
 		operationsInTime.put(operation, interval);
 	}
-	
+
 	public String toString()
 	{
 		return "M" + Integer.toString(this.id);
