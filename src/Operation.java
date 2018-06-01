@@ -82,10 +82,7 @@ public class Operation
 		machine.assignOperation(this, interval);
 		// System.out.println("-> " + machine + " (d=" + duration + ")");
 
-		// Remove operation from queue
-		this.getJob().removeFromQueue();
-
-		// Add operation to processed
+		// Set operation as processed
 		job.setProcessed(this, interval);
 	}
 

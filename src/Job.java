@@ -1,13 +1,12 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class Job
 {
 	private int id;
 	private ArrayList<Operation> operations = new ArrayList<Operation>();
-	private LinkedList<Operation> queue = new LinkedList<Operation>();
-	private LinkedList<Operation> processed = new LinkedList<Operation>();
+	private int processingIndex; // Pointer on the next operation to be processed
+	private Interval lastProcessedInterval;
 	private HashMap<Operation, Interval> operationsInTime =
 		new HashMap<Operation, Interval>();
 
@@ -20,7 +19,7 @@ public class Job
 	{
 		// Add new operation at the end
 		this.operations.add(operation);
-		this.queue.add(operation);
+		this.processingIndex = 0;
 	}
 
 	public int getId()
@@ -30,24 +29,22 @@ public class Job
 
 	public Operation getFromQueue()
 	{
-		return this.queue.peekFirst();
-	}
-
-	public void removeFromQueue()
-	{
-		this.queue.pop();
+		if (this.processingIndex < this.operations.size())
+			return this.operations.get(this.processingIndex);
+		else
+			return null;
 	}
 
 	public Interval getLastProcessedInterval()
 	{
-		Operation operation = this.processed.peekLast();
-		return this.operationsInTime.get(operation);
+		return this.lastProcessedInterval;
 	}
 
 	public void setProcessed(Operation operation, Interval interval)
 	{
-		this.processed.add(operation);
+		this.lastProcessedInterval = interval;
 		this.operationsInTime.put(operation, interval);
+		this.processingIndex++;
 	}
 
 	public int getDuration()

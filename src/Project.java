@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Project
 {
 	private ArrayList<Job> jobs = new ArrayList<Job>();
-	private ArrayList<Machine> machines = new ArrayList<Machine>(); // TODO: Why?
+	private ArrayList<Machine> machines = new ArrayList<Machine>(); // TODO: Use it for verification
 
 	public void addJob(Job job)
 	{
