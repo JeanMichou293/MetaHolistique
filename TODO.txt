@@ -1,10 +1,4 @@
 TODO
-Add TODO to git
-Verifier
-	Goal: makes sure solution is valid
-		verify every machine is not used for multiple operations at the same time
-		verify order of operations is respected
-		verify operations within job are not overlapping
 Determine complexity of solver
 "Optimizer"
 	getShiftCombinations(Solution solution)

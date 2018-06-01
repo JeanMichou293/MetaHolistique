@@ -35,4 +35,9 @@ public class Machine
 	{
 		return "M" + Integer.toString(this.id);
 	}
+	
+	public HashMap<Operation, Interval> getOperations()
+	{
+		return this.operationsInTime;
+	}
 }

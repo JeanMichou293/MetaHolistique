@@ -54,6 +54,16 @@ public class Job
 		return this.operationsInTime.get(lastOperation).end;
 	}
 
+	public ArrayList<Operation> getOperations()
+	{
+		return this.operations;
+	}
+
+	public HashMap<Operation, Interval> getOperationsInTime()
+	{
+		return this.operationsInTime;
+	}
+
 	public String toString()
 	{
 		String str = "J" + this.id + "o0";

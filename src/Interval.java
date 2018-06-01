@@ -3,10 +3,15 @@ public class Interval
 	public int begin;
 	public int end;
 
-	public Interval(int begin, int end)
+	public Interval(int begin, int end) throws IntervalException
 	{
-		this.begin = begin;
-		this.end = end;
+		if (begin > end) {
+			throw new IntervalException(
+				"You provided a wrong interval, moron!");
+		} else {
+			this.begin = begin;
+			this.end = end;
+		}
 	}
 
 	public boolean isIn(int time)

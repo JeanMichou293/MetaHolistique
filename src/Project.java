@@ -17,12 +17,22 @@ public class Project
 
 	public Job getJob(int index)
 	{
-		return jobs.get(index);
+		return this.jobs.get(index);
+	}
+
+	public ArrayList<Job> getJobs()
+	{
+		return this.jobs;
 	}
 
 	public Machine getMachine(int index)
 	{
-		return machines.get(index);
+		return this.machines.get(index);
+	}
+
+	public ArrayList<Machine> getMachines()
+	{
+		return this.machines;
 	}
 
 	public void process(int time)

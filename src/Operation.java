@@ -78,7 +78,12 @@ public class Operation
 		// Assign operation
 		Machine machine = this.getMachineByAffinity(time);
 		int duration = this.getMachineAffinity(machine);
-		Interval interval = new Interval(time, time + duration);
+		Interval interval = null;
+		try {
+			interval = new Interval(time, time + duration);
+		} catch (IntervalException e) {
+			e.printStackTrace();
+		}
 		machine.assignOperation(this, interval);
 		// System.out.println("-> " + machine + " (d=" + duration + ")");
 
