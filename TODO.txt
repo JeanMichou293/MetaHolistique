@@ -1,0 +1,21 @@
+TODO
+Add TODO to git
+Verifier
+	Goal: makes sure solution is valid
+		verify every machine is not used for multiple operations at the same time
+		verify order of operations is respected
+		verify operations within job are not overlapping
+Determine complexity of solver
+"Optimizer"
+	getShiftCombinations(Solution solution)
+	main func: while (solution is better than previous) { atomic shift; process every job except the shifted one; ...}
+Scheduler
+	Ideas of optimisation
+		#1. Distribute priority: first time, J0 then J1 etc. ; second time, J1 then J2 etc. ; etc.
+		#2. Shortest total remaining operations first
+
+	
+
+Implement MA and OS (cf. Marie Jo's homepage), determine the overall project cost
+Timeline: models time constraint (one operation by machine at a time)
+	=> used for generating MA and OS
