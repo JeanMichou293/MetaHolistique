@@ -1,37 +1,37 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class Optimiser
 {
 	private Project project;
 	private Solution bestSolution;
-	private int iterationCount;
-	private int maxIterationCount = 100;
+	private int badSolutionsCount;
+	private int maxBadSolutions = 100;
 
 	public Optimiser(Project project, Solution solution)
 	{
 		this.project = project;
 		this.bestSolution = solution;
-		this.iterationCount = 0;
+		this.badSolutionsCount = 0;
 	}
 
 	public void start()
 	{
-		this.optimise(this.bestSolution);
+		this.optimise();
 	}
 
-	private void optimise(Solution solution)
+	private void optimise()
 	{
-		while (this.iterationCount < this.maxIterationCount) {
-			// Make relevant shift
-			solution.shift();
-			
-			// Update project solution
-			this.project.updateFromSolution(solution);
+		// TODO: the one moment when solution should be saved is if it is better than best solution
+		while (this.badSolutionsCount < this.maxBadSolutions) {
+			project.iterateOptimisation();
 
-			if (solution.betterThan(bestSolution))
+			// Separate solution from project
+			Solution solution = project.exportSolution();
+
+			if (solution.betterThan(bestSolution)) {
 				this.bestSolution = solution;
-			this.iterationCount++;
+				this.badSolutionsCount = 0;
+			} else {
+				this.badSolutionsCount++;
+			}
 		}
 	}
 

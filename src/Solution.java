@@ -3,12 +3,15 @@ import java.util.HashMap;
 
 public class Solution
 {
-	private Project project;
+	private Project project; // For sync
 	private int cost;
+	private ArrayList<Job> jobs = new ArrayList<Job>();
+	private ArrayList<Machine> machines = new ArrayList<Machine>();
 
 	public Solution(Project project)
 	{
 		this.project = project;
+		this.saveFromProject();
 	}
 
 	public boolean betterThan(Solution solution)
@@ -16,59 +19,31 @@ public class Solution
 		return this.cost < solution.cost;
 	}
 
-	public void shift()
+	// Save operations, machines and cost
+	public void saveFromProject()
 	{
-		// Detect gap(s) (first?) in the critical path (longer job)
-		Job longerJob = this.project.getLongerJob();
-		Operation opToShift = null;
-		try {
-			opToShift = getOpAfterFirstGap(longerJob);
-		} catch (IntervalException e) {
-			e.printStackTrace();
+		this.jobs = new ArrayList<Job>();
+		this.machines = new ArrayList<Machine>();
+
+		// Duplicate jobs
+		for (Job job : this.project.getJobs()) {
+			Job job2 = new Job(job.getId());
+			HashMap<Operation, Interval> opInTime =
+				new HashMap<Operation, Interval>(job.getOperationsInTime());
+			job2.setOperationsInTime(opInTime);
+			this.jobs.add(job2);
 		}
 
-		if (opToShift != null) {
-			ArrayList<Operation> operations = longerJob.getOperations();
-			HashMap<Operation, Interval> operationsInTime =
-				longerJob.getOperationsInTime();
-			// Go to position
-			int index = 0;
-			for (Operation operation : operations) {
-				if (operation == opToShift)
-					break;
-				index++;
-			}
-
-			// Get gap duration
-			int gapBegin;
-			if (index > 0)
-				gapBegin = operationsInTime.get(operations.get(index - 1)).begin;
-			else
-				gapBegin = 0;
-			int gapEnd = operationsInTime.get(opToShift).begin;
-			int gapDuration = gapEnd - gapBegin;
-
-			// Shift backward every operation following the gap
-			for (int i = index; i < operations.size(); i++) {
-				Operation op = operations.get(i);
-				Interval interval = operationsInTime.get(op);
-				interval.shift(-1 * gapDuration);
-			}
+		// Duplicate machines
+		for (Machine machine : this.project.getMachines()) {
+			Machine machine2 = new Machine(machine.getId());
+			HashMap<Operation, Interval> opInTime =
+				new HashMap<Operation, Interval>(machine.getOperations());
+			machine2.setOperations(opInTime);
+			this.machines.add(machine2);
 		}
-	}
 
-	private static Operation getOpAfterFirstGap(Job job)
-		throws IntervalException
-	{
-		Interval lastInterval = null;
-		for (Operation operation : job.getOperations()) {
-			Interval interval = job.getOperationsInTime().get(operation);
-			if ((lastInterval == null && interval.begin > 0)
-				|| (lastInterval.end < interval.begin))
-				return operation;
-			else
-				lastInterval = interval;
-		}
-		return null;
+		// Save cost
+		this.cost = this.project.getDuration();
 	}
 }
