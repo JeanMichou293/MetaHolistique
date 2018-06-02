@@ -10,26 +10,19 @@ public class Project
 
 	public void process(ArrayList<Job> excludedJobs, int time)
 	{
-		ArrayList<Operation> opPool = new ArrayList<Operation>();
-
 		// Exclude jobs
 		ArrayList<Job> jobPool = new ArrayList<Job>(this.jobs);
-		for (Job job : excludedJobs) {
+		for (Job job : excludedJobs)
 			jobPool.remove(job);
-		}
 
+		// Get next operations and add them to pool
+		ArrayList<Operation> opPool = new ArrayList<Operation>();
 		for (Job job : jobPool) {
-			// Get operation at this time
 			Interval interval = job.getLastProcessedInterval();
 			Operation operation = job.getFromQueue();
-
-			if (operation != null) {
-				// No operation is being executed at the moment
-				if (interval == null || interval.end() <= time) {
-					// Add operation to pool
-					opPool.add(operation);
-				}
-			}
+			if (operation != null
+				&& (interval == null || interval.end() <= time))
+				opPool.add(operation);
 		}
 
 		// Process eligible operations
@@ -54,9 +47,9 @@ public class Project
 				}
 			}
 
+			// Select the shortest operation (SJF) for each machine
 			for (Entry<Machine, ArrayList<Operation>> entry : opPoolHash
 				.entrySet()) {
-				// Select the shortest operation (SJF) for each machine
 				int minDuration = Integer.MAX_VALUE;
 				Operation chosenOperation = null;
 				for (Operation operation : entry.getValue()) {
