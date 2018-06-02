@@ -46,4 +46,9 @@ public class Solution
 		// Save cost
 		this.cost = this.project.getDuration();
 	}
+
+	public String toString()
+	{
+		return "cost=" + Integer.toString(this.cost);
+	}
 }

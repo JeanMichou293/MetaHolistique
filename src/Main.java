@@ -4,7 +4,8 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		testDirectory("./textJobData/Barnes");
+		//testDirectory("./textJobData/Barnes");
+		testFile(new File("./textJobData/test.txt"));
 	}
 
 	public static void testDirectory(String path)
@@ -21,5 +22,14 @@ public class Main
 		System.out.print(file.getName() + ": ");
 		int result = Solver.solveByHeuristic(project);
 		System.out.println(result + "\t" + Verifier.verify(project));
+
+		System.out.println("Exporting basic solution...");
+		Solution basicSolution = project.exportSolution();
+		System.out.println("Basic solution: " + basicSolution);
+
+		System.out.println("Optimising...");
+		Optimiser optimiser = new Optimiser(project, basicSolution);
+		optimiser.start();
+		System.out.println("Best solution: " + optimiser.getBestSolution());
 	}
 }

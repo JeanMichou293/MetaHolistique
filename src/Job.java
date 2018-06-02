@@ -25,13 +25,13 @@ public class Job
 	public Job(int id)
 	{
 		this.id = id;
+		this.processingIndex = 0;
 	}
 
 	public void addOperation(Operation operation)
 	{
 		// Add new operation at the end
 		this.operations.add(operation);
-		this.processingIndex = 0;
 	}
 
 	public int getId()
@@ -45,6 +45,11 @@ public class Job
 			return this.operations.get(this.processingIndex);
 		else
 			return null;
+	}
+	
+	public void resetQueue()
+	{
+		this.processingIndex = 0;
 	}
 
 	public Interval getLastProcessedInterval()

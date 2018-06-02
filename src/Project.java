@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class Project
 {
@@ -10,7 +13,7 @@ public class Project
 		ArrayList<Operation> opPool = new ArrayList<Operation>();
 
 		// Exclude jobs
-		ArrayList<Job> jobPool = new ArrayList<Job>();
+		ArrayList<Job> jobPool = new ArrayList<Job>(this.jobs);
 		for (Job job : excludedJobs) {
 			jobPool.remove(job);
 		}
@@ -21,6 +24,7 @@ public class Project
 			Operation operation = job.getFromQueue();
 
 			// Operation can be assigned
+			// TODO: make it more efficient
 			if (operation != null && operation.isMachineAvailable(time)) {
 				// No operation is being executed at the moment
 				if (interval == null || interval.end <= time) {
@@ -30,24 +34,50 @@ public class Project
 			}
 		}
 
-		// Select shortest operation (SJF)
-		int minDuration = Integer.MAX_VALUE;
-		Operation chosenOperation = null;
-		Machine chosenMachine = null;
-		for (Operation operation : opPool) {
-			// Get machine with the best affinity
-			Machine machine = operation.getMachineByAffinity(time);
-			int duration = operation.getMachineAffinity(machine);
-			if (duration < minDuration) {
-				minDuration = duration;
-				chosenOperation = operation;
-				chosenMachine = machine;
+		// FIXME: terminate SJF implementation
+		while (!opPool.isEmpty()) {
+			HashMap<Machine, ArrayList<Operation>> opPoolHash =
+				new HashMap<Machine, ArrayList<Operation>>();
+
+			// Prepare hashmap for conflict resolution
+			Iterator<Operation> i = opPool.iterator();
+			while (i.hasNext()) {
+				Operation operation = i.next();
+				Machine machine = operation.getMachineByAffinity(time);
+				if (machine == null) {
+					i.remove(); // Prevent concurrent modification
+				} else {
+					ArrayList<Operation> opForMachine = opPoolHash.get(machine);
+					if (opForMachine == null)
+						opForMachine = new ArrayList<Operation>();
+					opForMachine.add(operation);
+					opPoolHash.put(machine, opForMachine);
+				}
+			}
+
+			for (Entry<Machine, ArrayList<Operation>> entry : opPoolHash
+				.entrySet()) {
+				// Select the shortest operation (SJF) for each machine
+				int minDuration = Integer.MAX_VALUE;
+				Operation chosenOperation = null;
+				for (Operation operation : entry.getValue()) {
+					// Get machine with the best affinity
+					int duration = operation.getMachineAffinity(entry.getKey());
+					if (duration < minDuration) {
+						minDuration = duration;
+						chosenOperation = operation;
+					}
+				}
+
+				// Process operation
+				if (chosenOperation != null) {
+					opPool.remove(chosenOperation);
+					chosenOperation.process(time, entry.getKey());
+					// XXX: debug
+					System.out.println(chosenOperation);
+				}
 			}
 		}
-
-		// Process operation
-		if (chosenOperation != null)
-			chosenOperation.process(time, chosenMachine);
 	}
 
 	public int solve()
@@ -58,8 +88,9 @@ public class Project
 	private int solve(ArrayList<Job> excludedJobs)
 	{
 		int time = 0;
+		this.resetQueue();
 		while (!this.isQueueEmpty()) {
-			// System.out.println("time=" + time);
+			System.out.println("time=" + time);
 			// Process every operation at the specified time
 			this.process(excludedJobs, time);
 
@@ -138,6 +169,12 @@ public class Project
 				return false;
 		}
 		return true;
+	}
+
+	private void resetQueue()
+	{
+		for (Job job : jobs)
+			job.resetQueue();
 	}
 
 	public Solution exportSolution()
