@@ -1,7 +1,10 @@
 TODO
 "Optimizer"
-	getShiftCombinations(Solution solution)
-	main func: while (solution is better than previous) { atomic shift; process every job except the shifted one; ...}
+	Improve it (shifting every time the longest job is kinda stupid)
+Display
+	Display very basic Gantt (use one "\t" or shit by time unit)
+	
+EXTRA MVP
 Scheduler
 	Ideas of optimisation
 		#1. Shortest job first (total remaining operations)

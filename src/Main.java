@@ -5,7 +5,8 @@ public class Main
 	public static void main(String[] args)
 	{
 		//testDirectory("./textJobData/Barnes");
-		testFile(new File("./textJobData/test.txt"));
+		//testFile(new File("./textJobData/test.txt"));
+		testFile(new File("./textJobData/Hurink_Data/sdata/la40.fjs"));
 	}
 
 	public static void testDirectory(String path)
@@ -22,6 +23,7 @@ public class Main
 		System.out.print(file.getName() + ": ");
 		int result = Solver.solveByHeuristic(project);
 		System.out.println(result + "\t" + Verifier.verify(project));
+		//System.out.println(result);
 
 		System.out.println("Exporting basic solution...");
 		Solution basicSolution = project.exportSolution();

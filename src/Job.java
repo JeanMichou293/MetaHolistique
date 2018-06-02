@@ -46,15 +46,25 @@ public class Job
 		else
 			return null;
 	}
-	
+
 	public void resetQueue()
 	{
 		this.processingIndex = 0;
+	}
+	
+	public void setProcessed()
+	{
+		this.processingIndex = this.operations.size();
 	}
 
 	public Interval getLastProcessedInterval()
 	{
 		return this.lastProcessedInterval;
+	}
+
+	public void resetLastProcessedInterval()
+	{
+		this.lastProcessedInterval = null;
 	}
 
 	public void setProcessed(Operation operation, Interval interval)
@@ -93,7 +103,7 @@ public class Job
 			Interval interval = this.operationsInTime.get(operation);
 			if (lastInterval == null && interval.begin > 0)
 				return new Gap(operation, new Interval(0, interval.begin));
-			else if (lastInterval.end < interval.begin)
+			else if (lastInterval != null && lastInterval.end < interval.begin)
 				return new Gap(operation,
 					new Interval(lastInterval.end, interval.begin));
 			else

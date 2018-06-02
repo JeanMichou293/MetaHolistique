@@ -16,11 +16,11 @@ public class Machine
 		return id;
 	}
 
-	public boolean isBusy(int time)
+	public boolean isBusy(Interval interval)
 	{
 		// TODO: make it more efficient
 		for (Operation operation : this.operationsInTime.keySet()) {
-			if (this.operationsInTime.get(operation).isIn(time))
+			if (this.operationsInTime.get(operation).overlaps(interval))
 				return true;
 		}
 		return false;
