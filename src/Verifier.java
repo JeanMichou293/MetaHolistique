@@ -41,7 +41,7 @@ public abstract class Verifier
 			for (Operation operation : job.getOperations()) {
 				Interval interval = job.getOperationsInTime().get(operation);
 				if (interval != null && (prevInterval == null
-					|| prevInterval.end <= interval.begin))
+					|| prevInterval.end() <= interval.begin()))
 					prevInterval = interval;
 				else
 					return false;

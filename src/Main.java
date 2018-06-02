@@ -4,9 +4,9 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		//testDirectory("./textJobData/Barnes");
+		testDirectory("./textJobData/Barnes");
 		//testFile(new File("./textJobData/test.txt"));
-		testFile(new File("./textJobData/Hurink_Data/sdata/la40.fjs"));
+		//testFile(new File("./textJobData/Hurink_Data/sdata/la40.fjs"));
 	}
 
 	public static void testDirectory(String path)
@@ -32,6 +32,6 @@ public class Main
 		System.out.println("Optimising...");
 		Optimiser optimiser = new Optimiser(project, basicSolution);
 		optimiser.start();
-		System.out.println("Best solution: " + optimiser.getBestSolution());
+		System.out.println("Best solution: " + optimiser.getBestSolution() + "\n\n");
 	}
 }

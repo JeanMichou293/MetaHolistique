@@ -23,13 +23,9 @@ public class Project
 			Interval interval = job.getLastProcessedInterval();
 			Operation operation = job.getFromQueue();
 
-			// Operation can be assigned
-			// TODO: make it more efficient
-			// XXX: isMachineAvailable() is probably useless now
-			// if (operation != null && operation.isMachineAvailable(time)) {
 			if (operation != null) {
 				// No operation is being executed at the moment
-				if (interval == null || interval.end <= time) {
+				if (interval == null || interval.end() <= time) {
 					// Add operation to pool
 					opPool.add(operation);
 				}
@@ -37,6 +33,7 @@ public class Project
 		}
 
 		// Process eligible operations
+		// TODO: make it more efficient
 		while (!opPool.isEmpty()) {
 			HashMap<Machine, ArrayList<Operation>> opPoolHash =
 				new HashMap<Machine, ArrayList<Operation>>();
@@ -76,7 +73,7 @@ public class Project
 					opPool.remove(chosenOperation);
 					chosenOperation.process(time, entry.getKey());
 					// XXX: debug
-					//System.out.println(chosenOperation);
+					// System.out.println(chosenOperation);
 				}
 			}
 		}
@@ -91,7 +88,7 @@ public class Project
 	{
 		int time = 0;
 		while (!this.isQueueEmpty()) {
-			//System.out.println("time=" + time);
+			// System.out.println("time=" + time);
 			// Process every operation at the specified time
 			this.process(excludedJobs, time);
 
@@ -123,8 +120,6 @@ public class Project
 		for (Machine machine : this.machines)
 			machine.setOperations(new HashMap<Operation, Interval>());
 		for (Operation operation : longestJob.getOperations()) {
-			HashMap<Operation, Interval> op =
-				new HashMap<Operation, Interval>();
 			for (Entry<Machine, Integer> entry : operation.getAffinities()
 				.entrySet()) {
 				Machine machine = entry.getKey();

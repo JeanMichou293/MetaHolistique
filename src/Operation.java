@@ -66,11 +66,6 @@ public class Operation
 		return bestMachine;
 	}
 
-	// XXX: obsolete
-	/*
-	 * public boolean isMachineAvailable(int time) { for (Entry<Machine, Integer> entry : this.affinities.entrySet()) { if (!entry.getKey().isBusy(time)) return true; } return false; }
-	 */
-
 	public void process(int time, Machine machine)
 	{
 		// System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ");

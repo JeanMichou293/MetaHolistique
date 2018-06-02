@@ -1,14 +1,13 @@
 public class Interval
 {
-	public int begin;
-	public int end;
+	private int begin;
+	private int end;
 
-	// TODO: more efficient: hashmap between time and time interval???
 	public Interval(int begin, int end) throws IntervalException
 	{
 		if (begin > end) {
 			throw new IntervalException(
-				"You provided a wrong interval, moron!");
+				"You provided an invalid interval, moron!");
 		} else {
 			this.begin = begin;
 			this.end = end;
@@ -30,6 +29,16 @@ public class Interval
 	public boolean overlaps(Interval interval)
 	{
 		return (this.end > interval.begin && this.begin < interval.end);
+	}
+
+	public int begin()
+	{
+		return this.begin;
+	}
+
+	public int end()
+	{
+		return this.end;
 	}
 
 	public String toString()

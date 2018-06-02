@@ -78,7 +78,7 @@ public class Job
 	{
 		Operation lastOperation =
 			this.operations.get(this.operations.size() - 1);
-		return this.operationsInTime.get(lastOperation).end;
+		return this.operationsInTime.get(lastOperation).end();
 	}
 
 	public ArrayList<Operation> getOperations()
@@ -101,11 +101,11 @@ public class Job
 		Interval lastInterval = null;
 		for (Operation operation : this.operations) {
 			Interval interval = this.operationsInTime.get(operation);
-			if (lastInterval == null && interval.begin > 0)
-				return new Gap(operation, new Interval(0, interval.begin));
-			else if (lastInterval != null && lastInterval.end < interval.begin)
+			if (lastInterval == null && interval.begin() > 0)
+				return new Gap(operation, new Interval(0, interval.begin()));
+			else if (lastInterval != null && lastInterval.end() < interval.begin())
 				return new Gap(operation,
-					new Interval(lastInterval.end, interval.begin));
+					new Interval(lastInterval.end(), interval.begin()));
 			else
 				lastInterval = interval;
 		}
@@ -132,7 +132,7 @@ public class Job
 				index++;
 			}
 
-			int gapDuration = firstGap.interval.end - firstGap.interval.begin;
+			int gapDuration = firstGap.interval.end() - firstGap.interval.begin();
 
 			// Shift backward every operation following the gap
 			for (int i = index; i < this.operations.size(); i++) {

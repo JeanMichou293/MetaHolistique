@@ -3,7 +3,7 @@ public class Optimiser
 	private Project project;
 	private Solution bestSolution;
 	private int badSolutionsCount;
-	private int maxBadSolutions = 5000;
+	private int maxBadSolutions = 100;
 
 	public Optimiser(Project project, Solution solution)
 	{
@@ -25,7 +25,7 @@ public class Optimiser
 			// Separate solution from project
 			// XXX: solution should be saved only when found to be the best
 			Solution solution = project.exportSolution();
-			System.out.println("Iteration over: " + solution);
+			//System.out.println("Iteration over: " + solution);
 
 			if (solution.betterThan(bestSolution)) {
 				this.bestSolution = solution;
