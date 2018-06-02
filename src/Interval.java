@@ -19,6 +19,12 @@ public class Interval
 		// Upper bound is excluded to allow operations to start at the end of others
 		return this.begin <= time && this.end > time;
 	}
+	
+	public void shift(int duration)
+	{
+		this.begin += duration;
+		this.end += duration;
+	}
 
 	// TODO: more efficient: hashmap between time and time interval???
 }

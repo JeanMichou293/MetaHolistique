@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Project
 {
 	private ArrayList<Job> jobs = new ArrayList<Job>();
-	private ArrayList<Machine> machines = new ArrayList<Machine>(); // TODO: Use it for verification
+	private ArrayList<Machine> machines = new ArrayList<Machine>();
 
 	public void addJob(Job job)
 	{
@@ -76,14 +76,21 @@ public class Project
 
 	public int getDuration()
 	{
+		return this.getLongerJob().getDuration();
+	}
+
+	public Job getLongerJob()
+	{
 		int maxDuration = 0;
+		Job longerJob = null;
 		for (Job job : jobs) {
 			int duration = job.getDuration();
-			if (duration > maxDuration)
+			if (duration > maxDuration) {
 				maxDuration = duration;
+				longerJob = job;
+			}
 		}
-
-		return maxDuration;
+		return longerJob;
 	}
 
 	public boolean isQueueEmpty()
@@ -101,5 +108,11 @@ public class Project
 		for (Job job : jobs)
 			str += job + "\n";
 		return str.substring(0, str.length() - 1);
+	}
+
+	public void updateFromSolution(Solution solution)
+	{
+		// TODO Auto-generated method stub
+
 	}
 }
