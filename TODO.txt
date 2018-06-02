@@ -1,14 +1,14 @@
 TODO
-Determine complexity of solver
 "Optimizer"
 	getShiftCombinations(Solution solution)
 	main func: while (solution is better than previous) { atomic shift; process every job except the shifted one; ...}
 Scheduler
 	Ideas of optimisation
-		#1. Distribute priority: first time, J0 then J1 etc. ; second time, J1 then J2 etc. ; etc.
-		#2. Shortest total remaining operations first
+		#1. Shortest job first (total remaining operations)
+		#2. (#1) combined with SJF???
+		#3. Distribute priority: first time, J0 then J1 etc. ; second time, J1 then J2 etc. ; etc.
 
-	
+
 
 Implement MA and OS (cf. Marie Jo's homepage), determine the overall project cost
 Timeline: models time constraint (one operation by machine at a time)

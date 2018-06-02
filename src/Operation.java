@@ -71,12 +71,11 @@ public class Operation
 		return false;
 	}
 
-	public void process(int time)
+	public void process(int time, Machine machine)
 	{
 		// System.out.print("Processing operation " + this + " (job=" + this.getJob().getId() + ") ");
 
 		// Assign operation
-		Machine machine = this.getMachineByAffinity(time);
 		int duration = this.getMachineAffinity(machine);
 		Interval interval = null;
 		try {

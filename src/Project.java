@@ -48,11 +48,7 @@ public class Project
 			if (operation != null && operation.isMachineAvailable(time)) {
 				// No operation is being executed at the moment
 				if (interval == null || interval.end <= time) {
-					// Basic heuristic
-					// Process operation
-					// operation.process(time);
-
-					// Add operation to list
+					// Add operation to pool
 					potentialPool.add(operation);
 				}
 			}
@@ -61,6 +57,7 @@ public class Project
 		// Select shortest operation (SJF)
 		int minDuration = Integer.MAX_VALUE;
 		Operation chosenOperation = null;
+		Machine chosenMachine = null;
 		for (Operation operation : potentialPool) {
 			// Get machine with best affinity
 			Machine machine = operation.getMachineByAffinity(time);
@@ -68,12 +65,13 @@ public class Project
 			if (duration < minDuration) {
 				minDuration = duration;
 				chosenOperation = operation;
+				chosenMachine = machine;
 			}
 		}
 
 		// Process operation
 		if (chosenOperation != null)
-			chosenOperation.process(time);
+			chosenOperation.process(time, chosenMachine);
 	}
 
 	public int getDuration()
