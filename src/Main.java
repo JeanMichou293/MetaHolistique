@@ -20,6 +20,6 @@ public class Main
 		Project project = Parser.parse(Parser.readFile(file));
 		System.out.print(file.getName() + ": ");
 		int result = Solver.solveByHeuristic(project);
-		System.out.println(result + "\t" + Verifier.verify(project));
+		System.out.println(result);// + "\t" + Verifier.verify(project));
 	}
 }

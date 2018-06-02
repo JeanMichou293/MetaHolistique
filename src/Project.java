@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class Project
 {
@@ -38,7 +41,12 @@ public class Project
 	public void process(int time)
 	{
 		ArrayList<Operation> potentialPool = new ArrayList<Operation>();
-
+		
+		// Shuffle jobs
+		/*ArrayList<Job> jobs2 = new ArrayList<Job>(this.jobs);
+		Collections.shuffle(jobs2);*/
+		Collections.rotate(this.jobs, 1);
+		
 		for (Job job : this.jobs) {
 			// Get operation at this time
 			Interval interval = job.getLastProcessedInterval();
@@ -49,11 +57,13 @@ public class Project
 				// No operation is being executed at the moment
 				if (interval == null || interval.end <= time) {
 					// Add operation to pool
-					potentialPool.add(operation);
+					//potentialPool.add(operation);
+					Machine machine = operation.getMachineByAffinity(time);
+					operation.process(time, machine);
 				}
 			}
 		}
-
+/*
 		// Select shortest operation (SJF)
 		int minDuration = Integer.MAX_VALUE;
 		Operation chosenOperation = null;
@@ -71,7 +81,7 @@ public class Project
 
 		// Process operation
 		if (chosenOperation != null)
-			chosenOperation.process(time, chosenMachine);
+			chosenOperation.process(time, chosenMachine);*/
 	}
 
 	public int getDuration()
