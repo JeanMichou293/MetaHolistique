@@ -96,18 +96,18 @@ public class Project
 		return this.getDuration();
 	}
 
-	public void iterateOptimisation()
+	public void iterateOptimisation(JobSelector jobSelector)
 	{
 		this.resetQueue();
+		Job referenceJob = jobSelector.selectReferenceJob(this);
 
 		// Make relevant shift
-		Job longestJob = this.getLongestJob();
-		longestJob.shift();
-		longestJob.setProcessed();
+		referenceJob.shift();
+		referenceJob.setProcessed();
 
 		// Reset operations (except for the longest job)
 		for (Job job : this.jobs) {
-			if (job != longestJob) {
+			if (job != referenceJob) {
 				job.setOperationsInTime(new HashMap<Operation, Interval>());
 				job.resetLastProcessedInterval();
 			}
@@ -116,18 +116,18 @@ public class Project
 		// Reset machines
 		for (Machine machine : this.machines)
 			machine.setOperations(new HashMap<Operation, Interval>());
-		for (Operation operation : longestJob.getOperations()) {
+		for (Operation operation : referenceJob.getOperations()) {
 			for (Entry<Machine, Integer> entry : operation.getAffinities()
 				.entrySet()) {
 				Machine machine = entry.getKey();
 				machine.getOperations().put(operation,
-					longestJob.getOperationsInTime().get(operation));
+					referenceJob.getOperationsInTime().get(operation));
 			}
 		}
 
 		// Update other jobs
 		ArrayList<Job> excludedJobs = new ArrayList<Job>();
-		excludedJobs.add(longestJob);
+		excludedJobs.add(referenceJob);
 		this.solve(excludedJobs);
 	}
 

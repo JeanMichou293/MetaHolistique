@@ -1,42 +1,90 @@
-public class Optimiser
+import java.util.ArrayList;
+import java.util.Random;
+
+public abstract class Optimiser
 {
-	private Project project;
-	private Solution bestSolution;
-	private int badSolutionsCount;
-	private int maxBadSolutions = 100;
+	private static Project project;
+	private static Solution bestSolution;
+	private static int loopCount;
 
-	public Optimiser(Project project, Solution solution)
+	public static void start(Project project, Solution solution)
 	{
-		this.project = project;
-		this.bestSolution = solution;
-		this.badSolutionsCount = 0;
+		Optimiser.project = project;
+		bestSolution = solution;
+		loopCount = 0;
+
+		optimise();
 	}
 
-	public void start()
+	private static void optimise()
 	{
-		this.optimise();
+		// Anonymous classes to execute instructions from inside Project
+		JobSelector longestJob = new JobSelector()
+		{
+			public Job selectReferenceJob(Project project)
+			{
+				return project.getLongestJob();
+			}
+
+			public String getName()
+			{
+				return "longest job";
+			}
+		};
+		JobSelector randomJob = new JobSelector()
+		{
+			public Job selectReferenceJob(Project project)
+			{
+				ArrayList<Job> jobs = project.getJobs();
+				int rand = (new Random()).nextInt(jobs.size());
+				return jobs.get(rand);
+			}
+
+			public String getName()
+			{
+				return "random job";
+			}
+		};
+
+		// Start with the "longest job" heuristic
+		//iterate(longestJob, 50);
+
+		// Switch to another method to avoid revisiting the same solutions
+		// over and over
+		// TODO: start iteration from the best solution (fetch it from memory
+		// and overwrite Project with it)
+		iterate(randomJob, 50000);
 	}
 
-	private void optimise()
+	private static void iterate(JobSelector jobSelector, int maxBadSolutions)
 	{
-		int counter = 1;
-		while (this.badSolutionsCount < this.maxBadSolutions) {
-			project.iterateOptimisation();
-			System.out.println(counter + ": cost=" + project.getDuration());
+		int badSolutionsCount = 0;
+		System.out.println("Iterating with the \"" + jobSelector.getName()
+			+ "\" heuristic...");
+		while (badSolutionsCount < maxBadSolutions) {
+			project.iterateOptimisation(jobSelector);
+			// System.out
+			// .println((loopCount + 1) + ": cost=" + project.getDuration());
 
 			if (project.getDuration() < bestSolution.getCost()) {
 				Solution solution = project.exportSolution();
-				this.bestSolution = solution;
-				this.badSolutionsCount = 0;
+				bestSolution = solution;
+				badSolutionsCount = 0;
 			} else {
-				this.badSolutionsCount++;
+				badSolutionsCount++;
 			}
-			counter++;
+			loopCount++;
 		}
+		System.out.println("Best solution found: " + bestSolution + "\n\n");
 	}
 
-	public Solution getBestSolution()
+	public static Solution getBestSolution()
 	{
-		return this.bestSolution;
+		return bestSolution;
+	}
+
+	public static int getLoopCount()
+	{
+		return loopCount;
 	}
 }

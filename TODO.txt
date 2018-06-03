@@ -5,6 +5,9 @@ Test Optimiser with every version of the scheduler
 	Compare CPU time
 
 EXTRA MVP
+Solver
+	Move Project.process() && Project.solve() to Solver
+	!!! If you need to access private fields of Project, pass "solver()" to Project (cf. comparators and "public int compare{}" (anonymous class))
 Organise sources into folders
 	E.g. util, model, tools, etc.
 Display

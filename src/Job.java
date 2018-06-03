@@ -122,7 +122,9 @@ public class Job
 		} catch (IntervalException e) {
 			e.printStackTrace();
 		}
-
+		if (firstGap == null)
+			return;
+		
 		Operation opToShift = firstGap.followingOp;
 		if (opToShift != null) {
 			// Go to position
