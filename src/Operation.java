@@ -6,13 +6,9 @@ public class Operation
 	private int id;
 	private Job job;
 
-	// List of affinity for each machine
+	// List of affinities for each machine
 	private HashMap<Machine, Integer> affinities =
 		new HashMap<Machine, Integer>();
-
-	/*
-	 * public enum State {PENDING, RUNNING, TERMINATED}; private State state = State.PENDING;
-	 */
 
 	public Operation(int id, Job job)
 	{
@@ -50,8 +46,16 @@ public class Operation
 	{
 		Machine bestMachine = null;
 		int minDuration = Integer.MAX_VALUE;
-		for (Machine machine : this.affinities.keySet()) {
-			if (!machine.isBusy(time)) {
+		for (Entry<Machine, Integer> entry : this.affinities.entrySet()) {
+			Machine machine = entry.getKey();
+			Interval interval = null;
+			try {
+				interval =
+					new Interval(time, time + this.affinities.get(machine));
+			} catch (IntervalException e) {
+				e.printStackTrace();
+			}
+			if (!machine.isBusy(interval)) {
 				int duration = this.affinities.get(machine);
 				if (duration < minDuration) {
 					minDuration = duration;
@@ -60,15 +64,6 @@ public class Operation
 			}
 		}
 		return bestMachine;
-	}
-
-	public boolean isMachineAvailable(int time)
-	{
-		for (Entry<Machine, Integer> entry : this.affinities.entrySet()) {
-			if (!entry.getKey().isBusy(time))
-				return true;
-		}
-		return false;
 	}
 
 	public void process(int time, Machine machine)
@@ -104,5 +99,22 @@ public class Operation
 			}
 		}
 		return str;
+	}
+
+	public boolean isMachineAvailable(int time)
+	{
+		for (Entry<Machine, Integer> entry : this.affinities.entrySet()) {
+			Machine machine = entry.getKey();
+			Interval interval = null;
+			try {
+				interval =
+					new Interval(time, time + this.affinities.get(machine));
+			} catch (IntervalException e) {
+				e.printStackTrace();
+			}
+			if (!entry.getKey().isBusy(interval))
+				return true;
+		}
+		return false;
 	}
 }

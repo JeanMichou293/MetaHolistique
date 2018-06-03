@@ -16,11 +16,11 @@ public class Machine
 		return id;
 	}
 
-	public boolean isBusy(int time)
+	public boolean isBusy(Interval interval)
 	{
-		// TODO: make it more efficient
+		// TODO: ordered intervals => constant time
 		for (Operation operation : this.operationsInTime.keySet()) {
-			if (this.operationsInTime.get(operation).isIn(time))
+			if (this.operationsInTime.get(operation).overlaps(interval))
 				return true;
 		}
 		return false;
@@ -31,13 +31,18 @@ public class Machine
 		operationsInTime.put(operation, interval);
 	}
 
-	public String toString()
-	{
-		return "M" + Integer.toString(this.id);
-	}
-	
 	public HashMap<Operation, Interval> getOperations()
 	{
 		return this.operationsInTime;
+	}
+
+	public void setOperations(HashMap<Operation, Interval> operations)
+	{
+		this.operationsInTime = operations;
+	}
+
+	public String toString()
+	{
+		return "M" + Integer.toString(this.id);
 	}
 }

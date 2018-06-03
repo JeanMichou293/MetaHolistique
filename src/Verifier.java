@@ -15,6 +15,7 @@ public abstract class Verifier
 		ArrayList<Machine> machines = project.getMachines();
 		for (Machine machine : machines) {
 			int duration = project.getDuration();
+			// TODO: ordered intervals => constant time
 			for (int time = 0; time <= duration; time++) {
 				// Find operations being processed
 				boolean found = false;
@@ -40,7 +41,8 @@ public abstract class Verifier
 			Interval prevInterval = null;
 			for (Operation operation : job.getOperations()) {
 				Interval interval = job.getOperationsInTime().get(operation);
-				if (prevInterval == null || prevInterval.end <= interval.begin)
+				if (interval != null && (prevInterval == null
+					|| prevInterval.end() <= interval.begin()))
 					prevInterval = interval;
 				else
 					return false;

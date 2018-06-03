@@ -1,12 +1,21 @@
 TODO
-"Optimizer"
-	getShiftCombinations(Solution solution)
-	main func: while (solution is better than previous) { atomic shift; process every job except the shifted one; ...}
+Organise sources
+	util, model, tools, etc.
+"Optimiser"
+	Improve it (shifting every time the longest job is kinda stupid)
+		#1. Shift random job
+		#1. Random shift within job
+Display
+	Display very basic Gantt (use one "\t" or shit by time unit)
+Genericity
+	No integers
+	
+EXTRA MVP
 Scheduler
 	Ideas of optimisation
 		#1. Shortest job first (total remaining operations)
 		#2. (#1) combined with SJF???
-		#3. Distribute priority: first time, J0 then J1 etc. ; second time, J1 then J2 etc. ; etc.
+		#3. Rotative priority
 
 
 
