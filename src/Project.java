@@ -5,8 +5,10 @@ import java.util.Map.Entry;
 
 public class Project
 {
+	private static final int UNDEFINED = -1;
 	private ArrayList<Job> jobs = new ArrayList<Job>();
 	private ArrayList<Machine> machines = new ArrayList<Machine>();
+	private int duration = UNDEFINED;
 
 	public void process(ArrayList<Job> excludedJobs, int time)
 	{
@@ -26,29 +28,30 @@ public class Project
 		}
 
 		// Process eligible operations
-		// TODO: make it more efficient
 		while (!opPool.isEmpty()) {
-			HashMap<Machine, ArrayList<Operation>> opPoolHash =
+			HashMap<Machine, ArrayList<Operation>> resolutionTable =
 				new HashMap<Machine, ArrayList<Operation>>();
 
-			// Prepare hashmap for conflict resolution
-			Iterator<Operation> i = opPool.iterator(); // Prevents concurrent modifications
+			// Prepare conflict resolution table
+			// NB: Iterator prevents concurrent modifications on the list
+			Iterator<Operation> i = opPool.iterator();
 			while (i.hasNext()) {
 				Operation operation = i.next();
 				Machine machine = operation.getMachineByAffinity(time);
 				if (machine == null) {
 					i.remove();
 				} else {
-					ArrayList<Operation> opForMachine = opPoolHash.get(machine);
+					ArrayList<Operation> opForMachine =
+						resolutionTable.get(machine);
 					if (opForMachine == null)
 						opForMachine = new ArrayList<Operation>();
 					opForMachine.add(operation);
-					opPoolHash.put(machine, opForMachine);
+					resolutionTable.put(machine, opForMachine);
 				}
 			}
 
-			// Select the shortest operation (SJF) for each machine
-			for (Entry<Machine, ArrayList<Operation>> entry : opPoolHash
+			// Select the shortest operation (SJF) for each conflicting machine
+			for (Entry<Machine, ArrayList<Operation>> entry : resolutionTable
 				.entrySet()) {
 				int minDuration = Integer.MAX_VALUE;
 				Operation chosenOperation = null;
@@ -80,15 +83,16 @@ public class Project
 	private int solve(ArrayList<Job> excludedJobs)
 	{
 		int time = 0;
+		this.duration = UNDEFINED;
 		while (!this.isQueueEmpty()) {
 			// System.out.println("time=" + time);
 			// Process every operation at the specified time
 			this.process(excludedJobs, time);
 
-			// TODO: optimisation: instead of incrementing, jump to next "interesting
-			// moment"???
 			time++;
 		}
+
+		this.updateDuration();
 		return this.getDuration();
 	}
 
@@ -157,9 +161,14 @@ public class Project
 		return this.machines;
 	}
 
+	private void updateDuration()
+	{
+		this.duration = this.getLongestJob().getDuration();
+	}
+
 	public int getDuration()
 	{
-		return this.getLongestJob().getDuration();
+		return this.duration;
 	}
 
 	public Job getLongestJob()

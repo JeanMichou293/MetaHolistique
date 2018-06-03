@@ -1,8 +1,14 @@
 TODO
-"Optimizer"
+Organise sources
+	util, model, tools, etc.
+"Optimiser"
 	Improve it (shifting every time the longest job is kinda stupid)
+		#1. Shift random job
+		#1. Random shift within job
 Display
 	Display very basic Gantt (use one "\t" or shit by time unit)
+Genericity
+	No integers
 	
 EXTRA MVP
 Scheduler

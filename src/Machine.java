@@ -18,7 +18,7 @@ public class Machine
 
 	public boolean isBusy(Interval interval)
 	{
-		// TODO: make it more efficient
+		// TODO: ordered intervals => constant time
 		for (Operation operation : this.operationsInTime.keySet()) {
 			if (this.operationsInTime.get(operation).overlaps(interval))
 				return true;

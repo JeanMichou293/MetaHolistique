@@ -6,7 +6,7 @@ public class Operation
 	private int id;
 	private Job job;
 
-	// List of affinity for each machine
+	// List of affinities for each machine
 	private HashMap<Machine, Integer> affinities =
 		new HashMap<Machine, Integer>();
 

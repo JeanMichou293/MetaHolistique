@@ -51,7 +51,7 @@ public class Job
 	{
 		this.processingIndex = 0;
 	}
-	
+
 	public void setProcessed()
 	{
 		this.processingIndex = this.operations.size();
@@ -103,7 +103,8 @@ public class Job
 			Interval interval = this.operationsInTime.get(operation);
 			if (lastInterval == null && interval.begin() > 0)
 				return new Gap(operation, new Interval(0, interval.begin()));
-			else if (lastInterval != null && lastInterval.end() < interval.begin())
+			else if (lastInterval != null
+				&& lastInterval.end() < interval.begin())
 				return new Gap(operation,
 					new Interval(lastInterval.end(), interval.begin()));
 			else
@@ -132,7 +133,8 @@ public class Job
 				index++;
 			}
 
-			int gapDuration = firstGap.interval.end() - firstGap.interval.begin();
+			int gapDuration =
+				firstGap.interval.end() - firstGap.interval.begin();
 
 			// Shift backward every operation following the gap
 			for (int i = index; i < this.operations.size(); i++) {

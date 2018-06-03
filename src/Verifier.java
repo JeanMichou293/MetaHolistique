@@ -15,6 +15,7 @@ public abstract class Verifier
 		ArrayList<Machine> machines = project.getMachines();
 		for (Machine machine : machines) {
 			int duration = project.getDuration();
+			// TODO: ordered intervals => constant time
 			for (int time = 0; time <= duration; time++) {
 				// Find operations being processed
 				boolean found = false;

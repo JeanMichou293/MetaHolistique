@@ -3,30 +3,23 @@ import java.util.HashMap;
 
 public class Solution
 {
-	private Project project; // For sync
 	private int cost;
 	private ArrayList<Job> jobs = new ArrayList<Job>();
 	private ArrayList<Machine> machines = new ArrayList<Machine>();
 
 	public Solution(Project project)
 	{
-		this.project = project;
-		this.saveFromProject();
-	}
-
-	public boolean betterThan(Solution solution)
-	{
-		return this.cost < solution.cost;
+		this.saveFromProject(project);
 	}
 
 	// Save operations, machines and cost
-	public void saveFromProject()
+	public void saveFromProject(Project project)
 	{
 		this.jobs = new ArrayList<Job>();
 		this.machines = new ArrayList<Machine>();
 
 		// Duplicate jobs
-		for (Job job : this.project.getJobs()) {
+		for (Job job : project.getJobs()) {
 			Job job2 = new Job(job.getId());
 			HashMap<Operation, Interval> opInTime =
 				new HashMap<Operation, Interval>(job.getOperationsInTime());
@@ -35,7 +28,7 @@ public class Solution
 		}
 
 		// Duplicate machines
-		for (Machine machine : this.project.getMachines()) {
+		for (Machine machine : project.getMachines()) {
 			Machine machine2 = new Machine(machine.getId());
 			HashMap<Operation, Interval> opInTime =
 				new HashMap<Operation, Interval>(machine.getOperations());
@@ -44,7 +37,12 @@ public class Solution
 		}
 
 		// Save cost
-		this.cost = this.project.getDuration();
+		this.cost = project.getDuration();
+	}
+
+	public int getCost()
+	{
+		return this.cost;
 	}
 
 	public String toString()

@@ -4,8 +4,8 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		testDirectory("./textJobData/Barnes");
-		//testFile(new File("./textJobData/test.txt"));
+		//testDirectory("./textJobData/Barnes");
+		testFile(new File("./textJobData/test.txt"));
 		//testFile(new File("./textJobData/Hurink_Data/sdata/la40.fjs"));
 	}
 
@@ -26,7 +26,7 @@ public class Main
 		int result = Solver.solveByHeuristic(project);
 		System.out.println(result + "\t" + Verifier.verify(project));
 		//System.out.println(result);
-
+/*
 		System.out.println("Exporting basic solution...");
 		Solution basicSolution = project.exportSolution();
 		System.out.println("Basic solution: " + basicSolution);
@@ -37,5 +37,5 @@ public class Main
 		long endTime = System.currentTimeMillis();
 		System.out.print("Best solution: " + optimiser.getBestSolution());
 		System.out.println(" (time=" + (endTime - startTime) + "ms)\n\n");
-	}
+*/	}
 }
