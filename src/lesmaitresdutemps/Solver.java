@@ -1,3 +1,5 @@
+package lesmaitresdutemps;
+
 public abstract class Solver
 {
 	// For now this is a crappy heuristic

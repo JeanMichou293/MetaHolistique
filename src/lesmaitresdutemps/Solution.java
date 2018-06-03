@@ -1,3 +1,5 @@
+package lesmaitresdutemps;
+
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -36,7 +38,8 @@ public class Solution
 			HashMap<Operation, Interval> machineTimeline =
 				new HashMap<Operation, Interval>(machine.getOperations());
 			// Copy interval (shifting can affect it)
-			for (Entry<Operation, Interval> entry : machineTimeline.entrySet()) {
+			for (Entry<Operation, Interval> entry : machineTimeline
+				.entrySet()) {
 				Interval interval = entry.getValue();
 				machineTimeline.put(entry.getKey(), interval.copy());
 			}
@@ -91,14 +94,10 @@ public class Solution
 	public String toString()
 	{
 		// XXX: debugging
-		/*String str = "SOLUTION:\ncost=" + this.cost + " real_cost=" + this.getRealCost();
-		for (Entry<Job, HashMap<Operation, Interval>> entry : this.jobOperations
-			.entrySet()) {
-			Job job = entry.getKey();
-			str += "\n" + job + "  (real_cost=" + this.getRealCostJob(job) + ")";
-		}
-		return str;*/
-		
+		/*
+		 * String str = "SOLUTION:\ncost=" + this.cost + " real_cost=" + this.getRealCost(); for (Entry<Job, HashMap<Operation, Interval>> entry : this.jobOperations .entrySet()) { Job job = entry.getKey(); str += "\n" + job + "  (real_cost=" + this.getRealCostJob(job) + ")"; } return str;
+		 */
+
 		return "cost=" + this.cost;
 	}
 }

@@ -1,3 +1,5 @@
+package lesmaitresdutemps;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -68,7 +70,7 @@ public class Project
 				if (chosenOperation != null) {
 					opPool.remove(chosenOperation);
 					chosenOperation.process(time, entry.getKey());
-					// XXX: debug
+					// XXX: debugging
 					// System.out.println(chosenOperation);
 				}
 			}
@@ -200,7 +202,7 @@ public class Project
 			job.resetQueue();
 	}
 
-	public Solution exportSolution()
+	public Solution export()
 	{
 		return new Solution(this);
 	}

@@ -1,3 +1,5 @@
+package lesmaitresdutemps;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -36,8 +38,7 @@ public abstract class Optimiser
 			public Job selectReferenceJob(Project project)
 			{
 				ArrayList<Job> jobs = project.getJobs();
-				int rand = (new Random()).nextInt(jobs.size());
-				return jobs.get(rand);
+				return jobs.get((new Random()).nextInt(jobs.size()));
 			}
 
 			public String getName()
@@ -47,34 +48,44 @@ public abstract class Optimiser
 		};
 
 		// Start with the "longest job" heuristic
-		iterate(longestJob, 50);
+		// iterate(longestJob, 100, 0);
 
 		// Start iteration from the best solution
-		project.load(bestSolution);
+		// project.load(bestSolution);
 
 		// Switch to another method to avoid revisiting the same solutions
 		// over and over
-		iterate(randomJob, 100);
+		iterate(randomJob, 100, 100);
 	}
 
-	private static void iterate(JobSelector jobSelector, int maxBadSolutions)
+	private static void iterate(JobSelector jobSelector, int maxBadSolutions,
+		int maxBacktracks)
 	{
-		int badSolutionsCount = 0;
 		System.out.println("Iterating with the \"" + jobSelector.getName()
 			+ "\" heuristic...");
-		while (badSolutionsCount < maxBadSolutions) {
-			project.iterateOptimisation(jobSelector);
-			System.out
-				.println((loopCount + 1) + ": cost=" + project.getDuration());
 
-			if (project.getDuration() < bestSolution.getCost()) {
-				Solution solution = project.exportSolution();
-				bestSolution = solution;
-				badSolutionsCount = 0;
-			} else {
-				badSolutionsCount++;
+		int backtracksCount = 0;
+		while (backtracksCount <= maxBacktracks) {
+			int badSolutionsCount = 0;
+			while (badSolutionsCount < maxBadSolutions) {
+				project.iterateOptimisation(jobSelector);
+
+				// System.out.println((loopCount + 1) + ": cost="
+				// + project.getDuration() + " " + Verifier.verify(project));
+
+				if (project.getDuration() < bestSolution.getCost()) {
+					Solution solution = project.export();
+					bestSolution = solution;
+					badSolutionsCount = 0;
+				} else {
+					badSolutionsCount++;
+				}
+				loopCount++;
 			}
-			loopCount++;
+			// System.out
+			// .println((backtracksCount + 1) + ": Trying to backtrack...");
+			project.load(bestSolution);
+			backtracksCount++;
 		}
 		System.out.println("Best solution found: " + bestSolution + "\n\n");
 	}

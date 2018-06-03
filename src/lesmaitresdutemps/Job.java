@@ -1,5 +1,10 @@
+package lesmaitresdutemps;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import lesmaitresdutemps.Interval;
+import lesmaitresdutemps.IntervalException;
 
 public class Job
 {
@@ -156,11 +161,10 @@ public class Job
 	{
 		String str = "J" + this.id + "o0 (duration=" + this.getDuration() + ")";
 
-		// XXX: debug
-		/*for (Operation operation : operations) {
-			str += " --" + operation + "-> J" + this.id + "o"
-				+ (operation.getId() + 1);
-		}*/
+		// XXX: debugging
+		/*
+		 * for (Operation operation : operations) { str += " --" + operation + "-> J" + this.id + "o" + (operation.getId() + 1); }
+		 */
 
 		return str;
 	}

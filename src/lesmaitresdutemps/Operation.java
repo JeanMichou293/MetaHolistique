@@ -1,5 +1,11 @@
+package lesmaitresdutemps;
+
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import lesmaitresdutemps.Interval;
+import lesmaitresdutemps.IntervalException;
+import lesmaitresdutemps.Machine;
 
 public class Operation
 {

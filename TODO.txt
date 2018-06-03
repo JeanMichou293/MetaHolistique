@@ -1,7 +1,6 @@
 "Optimiser"
-	Start from last best solution
 	Test campaign
-	
+
 EXTRA MVP
 Optimiser
 	Improve it (shifting every time the longest job is kinda stupid)

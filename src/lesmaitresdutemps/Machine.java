@@ -1,3 +1,5 @@
+package lesmaitresdutemps;
+
 import java.util.HashMap;
 
 public class Machine

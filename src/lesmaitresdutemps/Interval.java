@@ -1,3 +1,5 @@
+package lesmaitresdutemps;
+
 public class Interval
 {
 	private int begin;

@@ -1,3 +1,5 @@
+package lesmaitresdutemps;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -87,7 +89,7 @@ public class Parser
 		}
 
 		catch (Exception e) {
-			System.out.println("Fichier illisible!!!");
+			System.out.println("File is not readable!!!");
 			e.printStackTrace();
 		}
 
