@@ -91,6 +91,11 @@ public class Job
 		return this.operationsInTime;
 	}
 
+	public void setOperations(ArrayList<Operation> operations)
+	{
+		this.operations = operations;
+	}
+
 	public void setOperationsInTime(HashMap<Operation, Interval> opInTime)
 	{
 		this.operationsInTime = opInTime;
@@ -124,7 +129,7 @@ public class Job
 		}
 		if (firstGap == null)
 			return;
-		
+
 		Operation opToShift = firstGap.followingOp;
 		if (opToShift != null) {
 			// Go to position
@@ -149,12 +154,13 @@ public class Job
 
 	public String toString()
 	{
-		String str = "J" + this.id + "o0";
+		String str = "J" + this.id + "o0 (duration=" + this.getDuration() + ")";
 
-		for (Operation operation : operations) {
+		// XXX: debug
+		/*for (Operation operation : operations) {
 			str += " --" + operation + "-> J" + this.id + "o"
 				+ (operation.getId() + 1);
-		}
+		}*/
 
 		return str;
 	}

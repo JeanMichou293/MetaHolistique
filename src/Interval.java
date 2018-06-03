@@ -41,6 +41,16 @@ public class Interval
 		return this.end;
 	}
 
+	public Interval copy()
+	{
+		try {
+			return new Interval(this.begin, this.end);
+		} catch (IntervalException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public String toString()
 	{
 		return "[" + this.begin + "," + this.end + "]";

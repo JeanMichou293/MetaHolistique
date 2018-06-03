@@ -23,7 +23,8 @@ public class Main
 		System.out.print(file.getName() + ": ");
 
 		long startTime = System.currentTimeMillis();
-		int result = Solver.solveByHeuristic(project);
+		Solver.solveByHeuristic(project);
+		int result = project.getDuration();
 		System.out.println(result + "\t" + Verifier.verify(project));
 		// System.out.println(result);
 

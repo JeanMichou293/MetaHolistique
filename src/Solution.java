@@ -1,11 +1,11 @@
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class Solution
 {
 	private int cost;
-	private ArrayList<Job> jobs = new ArrayList<Job>();
-	private ArrayList<Machine> machines = new ArrayList<Machine>();
+	private HashMap<Job, HashMap<Operation, Interval>> jobOperations;
+	private HashMap<Machine, HashMap<Operation, Interval>> machineOperations;
 
 	public Solution(Project project)
 	{
@@ -15,25 +15,32 @@ public class Solution
 	// Save operations, machines and cost
 	public void saveFromProject(Project project)
 	{
-		this.jobs = new ArrayList<Job>();
-		this.machines = new ArrayList<Machine>();
+		this.jobOperations = new HashMap<Job, HashMap<Operation, Interval>>();
+		this.machineOperations =
+			new HashMap<Machine, HashMap<Operation, Interval>>();
 
-		// Duplicate jobs
+		// Save jobs
 		for (Job job : project.getJobs()) {
-			Job job2 = new Job(job.getId());
-			HashMap<Operation, Interval> opInTime =
+			HashMap<Operation, Interval> jobTimeline =
 				new HashMap<Operation, Interval>(job.getOperationsInTime());
-			job2.setOperationsInTime(opInTime);
-			this.jobs.add(job2);
+			// Copy interval (shifting can affect it)
+			for (Entry<Operation, Interval> entry : jobTimeline.entrySet()) {
+				Interval interval = entry.getValue();
+				jobTimeline.put(entry.getKey(), interval.copy());
+			}
+			this.jobOperations.put(job, jobTimeline);
 		}
 
-		// Duplicate machines
+		// Save machines
 		for (Machine machine : project.getMachines()) {
-			Machine machine2 = new Machine(machine.getId());
-			HashMap<Operation, Interval> opInTime =
+			HashMap<Operation, Interval> machineTimeline =
 				new HashMap<Operation, Interval>(machine.getOperations());
-			machine2.setOperations(opInTime);
-			this.machines.add(machine2);
+			// Copy interval (shifting can affect it)
+			for (Entry<Operation, Interval> entry : machineTimeline.entrySet()) {
+				Interval interval = entry.getValue();
+				machineTimeline.put(entry.getKey(), interval.copy());
+			}
+			this.machineOperations.put(machine, machineTimeline);
 		}
 
 		// Save cost
@@ -45,8 +52,53 @@ public class Solution
 		return this.cost;
 	}
 
+	public HashMap<Job, HashMap<Operation, Interval>> getOpByJob()
+	{
+		return this.jobOperations;
+	}
+
+	public HashMap<Machine, HashMap<Operation, Interval>> getOpByMachine()
+	{
+		return this.machineOperations;
+	}
+
+	// TODO: not required anymore
+	public int getRealCost()
+	{
+		int maxDuration = 0;
+		Job longestJob = null;
+		for (Entry<Job, HashMap<Operation, Interval>> entry : this.jobOperations
+			.entrySet()) {
+			Job job = entry.getKey();
+			Operation lastOp =
+				job.getOperations().get(job.getOperations().size() - 1);
+			Interval interval = entry.getValue().get(lastOp);
+			if (interval.end() > maxDuration) {
+				maxDuration = interval.end();
+				longestJob = job;
+			}
+		}
+		return cost;
+	}
+
+	public int getRealCostJob(Job job)
+	{
+		Operation lastOp =
+			job.getOperations().get(job.getOperations().size() - 1);
+		return this.jobOperations.get(job).get(lastOp).end();
+	}
+
 	public String toString()
 	{
-		return "cost=" + Integer.toString(this.cost);
+		// XXX: debugging
+		/*String str = "SOLUTION:\ncost=" + this.cost + " real_cost=" + this.getRealCost();
+		for (Entry<Job, HashMap<Operation, Interval>> entry : this.jobOperations
+			.entrySet()) {
+			Job job = entry.getKey();
+			str += "\n" + job + "  (real_cost=" + this.getRealCostJob(job) + ")";
+		}
+		return str;*/
+		
+		return "cost=" + this.cost;
 	}
 }

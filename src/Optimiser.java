@@ -47,13 +47,14 @@ public abstract class Optimiser
 		};
 
 		// Start with the "longest job" heuristic
-		//iterate(longestJob, 50);
+		iterate(longestJob, 50);
+
+		// Start iteration from the best solution
+		project.load(bestSolution);
 
 		// Switch to another method to avoid revisiting the same solutions
 		// over and over
-		// TODO: start iteration from the best solution (fetch it from memory
-		// and overwrite Project with it)
-		iterate(randomJob, 50000);
+		iterate(randomJob, 100);
 	}
 
 	private static void iterate(JobSelector jobSelector, int maxBadSolutions)
@@ -63,8 +64,8 @@ public abstract class Optimiser
 			+ "\" heuristic...");
 		while (badSolutionsCount < maxBadSolutions) {
 			project.iterateOptimisation(jobSelector);
-			// System.out
-			// .println((loopCount + 1) + ": cost=" + project.getDuration());
+			System.out
+				.println((loopCount + 1) + ": cost=" + project.getDuration());
 
 			if (project.getDuration() < bestSolution.getCost()) {
 				Solution solution = project.exportSolution();

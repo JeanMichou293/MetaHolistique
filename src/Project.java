@@ -75,12 +75,12 @@ public class Project
 		}
 	}
 
-	public int solve()
+	public void solve()
 	{
-		return this.solve(new ArrayList<Job>());
+		this.solve(new ArrayList<Job>());
 	}
 
-	private int solve(ArrayList<Job> excludedJobs)
+	private void solve(ArrayList<Job> excludedJobs)
 	{
 		int time = 0;
 		this.duration = UNDEFINED;
@@ -93,7 +93,7 @@ public class Project
 		}
 
 		this.updateDuration();
-		return this.getDuration();
+		// return this.getDuration();
 	}
 
 	public void iterateOptimisation(JobSelector jobSelector)
@@ -174,15 +174,15 @@ public class Project
 	public Job getLongestJob()
 	{
 		int maxDuration = 0;
-		Job longerJob = null;
+		Job longestJob = null;
 		for (Job job : this.jobs) {
 			int duration = job.getDuration();
 			if (duration > maxDuration) {
 				maxDuration = duration;
-				longerJob = job;
+				longestJob = job;
 			}
 		}
-		return longerJob;
+		return longestJob;
 	}
 
 	public boolean isQueueEmpty()
@@ -203,6 +203,15 @@ public class Project
 	public Solution exportSolution()
 	{
 		return new Solution(this);
+	}
+
+	public void load(Solution bestSolution)
+	{
+		for (Job job : this.jobs)
+			job.setOperationsInTime(bestSolution.getOpByJob().get(job));
+		for (Machine machine : this.machines)
+			machine.setOperations(bestSolution.getOpByMachine().get(machine));
+		this.updateDuration();
 	}
 
 	public String toString()
