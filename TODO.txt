@@ -1,24 +1,13 @@
-TODO
-Organise sources
-	util, model, tools, etc.
 "Optimiser"
 	Improve it (shifting every time the longest job is kinda stupid)
-		#1. Shift random job
-		#1. Random shift within job
+		#1. Random shift on (random) job
+Test Optimiser with every version of the scheduler
+	Compare CPU time
+
+EXTRA MVP
+Organise sources into folders
+	E.g. util, model, tools, etc.
 Display
 	Display very basic Gantt (use one "\t" or shit by time unit)
 Genericity
-	No integers
-	
-EXTRA MVP
-Scheduler
-	Ideas of optimisation
-		#1. Shortest job first (total remaining operations)
-		#2. (#1) combined with SJF???
-		#3. Rotative priority
-
-
-
-Implement MA and OS (cf. Marie Jo's homepage), determine the overall project cost
-Timeline: models time constraint (one operation by machine at a time)
-	=> used for generating MA and OS
+	No integers (=> pass type as a parameter (<T>))
