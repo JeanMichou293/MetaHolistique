@@ -69,6 +69,7 @@ public class Solution
 	public int getRealCost()
 	{
 		int maxDuration = 0;
+		@SuppressWarnings("unused")
 		Job longestJob = null;
 		for (Entry<Job, HashMap<Operation, Interval>> entry : this.jobOperations
 			.entrySet()) {

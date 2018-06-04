@@ -21,6 +21,7 @@ public abstract class Optimiser
 	private static void optimise()
 	{
 		// Anonymous classes to execute instructions from inside Project
+		@SuppressWarnings("unused")
 		JobSelector longestJob = new JobSelector()
 		{
 			public Job selectReferenceJob(Project project)
